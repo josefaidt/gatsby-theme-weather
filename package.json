@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "workspaces": [
+    "theme",
+    "demo"
+  ],
+  "devDependencies": {
+    "@josefaidt/eslint-config": "^0.1.8",
+    "eslint": "^6.0.1",
+    "husky": "^3.0.0",
+    "lint-staged": "^9.0.2"
+  }
+}
