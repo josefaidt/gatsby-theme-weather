@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Page = () => (
+const TestPage = () => (
   <>
     <h1>Hello, World</h1>
   </>
 )
 
-export default Page
+export default TestPage
