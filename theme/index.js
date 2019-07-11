@@ -1,1 +1,1 @@
-export { default as Layout } from './src/layouts/default'
+export { default as Layout } from './src/templates/default'

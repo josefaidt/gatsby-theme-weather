@@ -8,6 +8,51 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs)
 }
 
+exports.createPages = async ({ actions, reporter, graphql }) => {
+  reporter.warn('make sure to load data from somewhere!')
+
+  const { data } = await graphql(`
+    query {
+      allFile(filter: { sourceInstanceName: { eq: "views" } }) {
+        edges {
+          node {
+            id
+            dir
+            name
+          }
+        }
+      }
+    }
+  `)
+
+  data.allFile.edges.forEach(({ node }) => {
+    console.log(node)
+    actions.createPage({
+      path: '/',
+      component: require.resolve(`./src/templates/default.js`),
+      context: { heading: 'gatsby-theme-weather' },
+    })
+  })
+
+  // TODO replace this with data from somewhere
+  // actions.createPage({
+  //   path: '/',
+  //   component: require.resolve('./src/templates/default.js'),
+  //   context: {
+  //     heading: 'Your Theme Here',
+  //     content: `
+  //       <p>
+  //         Use this handy theme example as the basis for your own amazing theme!
+  //       </p>
+  //       <p>
+  //         For more information, see
+  //         <a href="https://themejam.gatsbyjs.org">themejam.gatsbyjs.org</a>.
+  //       </p>
+  //     `,
+  //   },
+  // })
+}
+
 // exports.createPages = async ({ actions, reporter, graphql }) => {
 //   reporter.warn('make sure to load data from somewhere!')
 
@@ -25,15 +70,15 @@ exports.createSchemaCustomization = ({ actions }) => {
 //       }
 //     }
 //   `)
-//   data.allFile.edges.forEach(({ node }) => {
-//     console.log(node)
-//     const slug = node.name === '' ? '/' : `/${node.name}`
-//     actions.createPage({
-//       path: slug,
-//       component: require.resolve(`./src/layouts/default.js`),
-//       context: { slug: slug },
-//     })
+// data.allFile.edges.forEach(({ node }) => {
+//   console.log(node)
+//   const slug = node.name === '' ? '/' : `/${node.name}`
+//   actions.createPage({
+//     path: slug,
+//     component: require.resolve(`./src/layouts/default.js`),
+//     context: { slug: slug },
 //   })
+// })
 
 // // TODO replace this with data from somewhere
 // actions.createPage({
