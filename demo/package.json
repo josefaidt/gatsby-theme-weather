@@ -4,21 +4,16 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
     "start": "yarn clean; yarn develop",
-    "serve": "gatsby serve",
+    "build": "yarn clean; gatsby build",
+    "develop": "gatsby develop",
     "clean": "rm -rf .cache",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "serve": "gatsby serve"
   },
   "dependencies": {
     "gatsby": "^2.13.21",
     "gatsby-theme-weather": "*",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
-  },
-  "devDependencies": {
-    "prettier": "^1.18.2"
   }
 }
