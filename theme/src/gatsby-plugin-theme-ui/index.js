@@ -7,12 +7,12 @@ export default {
   colors: {
     text: '#232129',
     background: 'whitesmoke',
-    primary: '#639',
+    primary: '#c6797e',
   },
   fonts: {
     default:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-    plex: 'IBM Plex Mono',
+    josefin: 'Josefin Sans',
   },
   fontSizes: [16, 18, 20, 22, 27, 36],
   lineHeights: {
@@ -20,13 +20,13 @@ export default {
     heading: '1.1',
   },
   sizes: {
-    container: 650,
+    container: '90vw',
   },
   styles: {
     Layout: {
       backgroundColor: 'background',
       color: 'text',
-      fontFamily: 'plex',
+      fontFamily: 'josefin',
       fontSize: 1,
       lineHeight: 'text',
     },

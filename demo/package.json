@@ -7,8 +7,9 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "yarn develop",
+    "start": "yarn clean; yarn develop",
     "serve": "gatsby serve",
+    "clean": "rm -rf .cache",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
   "dependencies": {

@@ -9,6 +9,7 @@ const useGeolocation = () => {
     latitude: null,
     longitude: null,
     speed: null,
+    loading: true,
     timestamp: Date.now(),
   })
   let mounted = true
@@ -22,6 +23,7 @@ const useGeolocation = () => {
         altitudeAccuracy: event.coords.altitudeAccuracy,
         heading: event.coords.heading,
         latitude: event.coords.latitude,
+        loading: false,
         longitude: event.coords.longitude,
         speed: event.coords.speed,
         timestamp: event.timestamp,
@@ -43,7 +45,7 @@ const useGeolocation = () => {
     }
   }, [0])
 
-  return state
+  return { geoLocation: state, pending: state.loading }
 }
 
 export default useGeolocation

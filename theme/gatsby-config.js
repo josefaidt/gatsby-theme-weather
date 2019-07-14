@@ -1,6 +1,6 @@
-module.exports = {
+module.exports = ({ basePath = '/' }) => ({
   siteMetadata: {
-    title: 'Gatsby Theme Jam Example Submission',
+    title: 'Weather',
   },
   plugins: [
     'gatsby-plugin-theme-ui',
@@ -8,16 +8,9 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         defaultLayouts: {
-          pages: require.resolve('./src/templates/default.js'),
+          default: require.resolve('./src/components/layout.js'),
         },
       },
     },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `pages`,
-        path: `src/pages`,
-      },
-    },
   ],
-}
+})
