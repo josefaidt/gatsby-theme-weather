@@ -1,9 +1,7 @@
-// import React from 'react'
-// import useGeoLocation from './src/hooks/useGeoLocation'
+import React from 'react'
+import { GeoContextProvider } from './src/helpers/GeoLocation'
 
-// // eslint-disable-next-line react/display-name
-// export const wrapRootElement = ({ element }) => {
-//   const geoLocation = useGeoLocation()
-//   const GeoLocationContext = React.createContext()
-//   return <GeoLocationContext.Provider value={geoLocation}>{element}</GeoLocationContext.Provider>
-// }
+// eslint-disable-next-line react/display-name
+export const wrapRootElement = ({ element }) => {
+  return <GeoContextProvider>{element}</GeoContextProvider>
+}

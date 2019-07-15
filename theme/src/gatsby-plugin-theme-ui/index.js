@@ -12,7 +12,7 @@ export default {
   fonts: {
     default:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-    josefin: 'Josefin Sans',
+    plex: 'IBM Plex Mono',
   },
   fontSizes: [16, 18, 20, 22, 27, 36],
   lineHeights: {
@@ -26,7 +26,7 @@ export default {
     Layout: {
       backgroundColor: 'background',
       color: 'text',
-      fontFamily: 'josefin',
+      fontFamily: 'plex',
       fontSize: 1,
       lineHeight: 'text',
     },

@@ -12,6 +12,7 @@
   - weather company data?
   - OpenWeatherMap?
 - [ ] sketch files
+- [ ] populate location context with default data? (Baton Rouge?)
 
 ## Roadmap
 

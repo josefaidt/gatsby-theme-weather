@@ -1,51 +1,54 @@
 import React from 'react'
 
-const useGeolocation = () => {
-  const [state, setState] = React.useState({
+const defaultSettings = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+}
+
+const useGeolocation = (settings = defaultSettings) => {
+  const [geo, setGeo] = React.useState({
     accuracy: null,
-    altitude: null,
-    altitudeAccuracy: null,
-    heading: null,
+    // altitude: null,
+    // altitudeAccuracy: null,
+    // heading: null,
     latitude: null,
     longitude: null,
     speed: null,
-    loading: true,
     timestamp: Date.now(),
   })
-  let mounted = true
-  let watchId
+  const [pending, setPending] = React.useState(true)
+  const [error, setError] = React.useState(null)
 
-  const onEvent = event => {
-    if (mounted) {
-      setState({
-        accuracy: event.coords.accuracy,
-        altitude: event.coords.altitude,
-        altitudeAccuracy: event.coords.altitudeAccuracy,
-        heading: event.coords.heading,
-        latitude: event.coords.latitude,
-        loading: false,
-        longitude: event.coords.longitude,
-        speed: event.coords.speed,
-        timestamp: event.timestamp,
-      })
-    }
+  const onChange = event => {
+    setGeo({
+      accuracy: event.coords.accuracy,
+      // altitude: event.coords.altitude,
+      // altitudeAccuracy: event.coords.altitudeAccuracy,
+      // heading: event.coords.heading,
+      latitude: event.coords.latitude,
+      longitude: event.coords.longitude,
+      // speed: event.coords.speed,
+      timestamp: event.timestamp,
+    })
+    setPending(false)
   }
 
-  const onEventError = error => {
-    mounted && React.setState(oldState => ({ ...oldState, loading: false, error }))
+  const onError = error => {
+    setError(error)
+    setPending(false)
   }
 
   React.useEffect(() => {
-    navigator.geolocation.getCurrentPosition(onEvent, onEventError)
-    watchId = navigator.geolocation.watchPosition(onEvent, onEventError)
-
-    return () => {
-      mounted = false
-      navigator.geolocation.clearWatch(watchId)
+    const geo = navigator.geolocation
+    if (!geo) {
+      setError(`GeoLocation access is disabled`)
+      return
     }
-  }, [0])
+    geo.getCurrentPosition(onChange, onError, settings)
+  }, [settings])
 
-  return { geoLocation: state, pending: state.loading }
+  return { data: geo, pending, error }
 }
 
 export default useGeolocation
