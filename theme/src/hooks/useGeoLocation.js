@@ -15,7 +15,7 @@ const useGeolocation = (settings = defaultSettings) => {
     latitude: null,
     longitude: null,
     speed: null,
-    timestamp: Date.now(),
+    // timestamp: Date.now(),
   })
   const [pending, setPending] = React.useState(true)
   const [error, setError] = React.useState(null)
@@ -29,7 +29,7 @@ const useGeolocation = (settings = defaultSettings) => {
       latitude: event.coords.latitude,
       longitude: event.coords.longitude,
       // speed: event.coords.speed,
-      timestamp: event.timestamp,
+      // timestamp: event.timestamp,
     })
     setPending(false)
   }

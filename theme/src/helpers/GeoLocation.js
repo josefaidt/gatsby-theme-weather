@@ -34,6 +34,7 @@ const useGeoState = () => {
   }
   return context
 }
+
 const useGeoDispatch = () => {
   const context = React.useContext(GeoDispatchContext)
   if (context === undefined) {
