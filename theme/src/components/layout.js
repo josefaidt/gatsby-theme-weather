@@ -35,7 +35,6 @@ const Layout = ({ children, pageContext }) => {
         <h1>{pageContext.frontmatter.title}</h1>
         <Container>
           {children}
-          <button onClick={useGeoDispatch({ type: 'update' })}>UPDATE GEO</button>
           <br />
           {!pending ? (
             <pre>{JSON.stringify(geoLocation, null, 2)}</pre>
