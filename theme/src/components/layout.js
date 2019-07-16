@@ -38,8 +38,10 @@ const Layout = ({ children, pageContext }) => {
           <br />
           {!pending ? (
             <pre>{JSON.stringify(geoLocation, null, 2)}</pre>
-          ) : (
+          ) : pending && !geoLocation.error ? (
             <span>Pending GeoLocation...</span>
+          ) : (
+            <span>Need GeoLocation...</span>
           )}
         </Container>
       </Main>

@@ -2,16 +2,16 @@ import React from 'react'
 
 const defaultLocation = '37.8267,-122.4233'
 const proxy = 'https://cors-anywhere.herokuapp.com'
-const forecastUrl = `https://api.darksky.net/forecast/${process.env.API_KEY}`
-const url = `${proxy}/${forecastUrl}`
+const forecastUrl = key => `https://api.darksky.net/forecast/${key}`
 
-const useDarkSkyWeather = location => {
+const useDarkSkyWeather = (location, key) => {
   const [response, setResponse] = React.useState({})
   const [error, setError] = React.useState(null)
   const [pending, setPending] = React.useState(true)
   React.useEffect(() => {
     setPending(true)
     let reqUrl = ''
+    const url = `${proxy}/${forecastUrl(key)}`
     if (!location || location === null) {
       reqUrl = `${url}/${defaultLocation}`
     } else {
@@ -26,7 +26,7 @@ const useDarkSkyWeather = location => {
         setPending(false)
       })
       .catch(e => setError(new Error(e)))
-  }, [location])
+  }, [key, location])
   return { data: response, pending, error }
 }
 
