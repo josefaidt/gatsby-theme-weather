@@ -8,7 +8,7 @@ const Layout = ({ children, pageContext }) => {
   const geoLocation = useGeoState()
   useGeoDispatch({ type: 'reset' })
   console.log(`[LAYOUT] GEO STATE`, geoLocation)
-  const { pending } = geoLocation
+  // const { pending, error } = geoLocation
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -36,12 +36,11 @@ const Layout = ({ children, pageContext }) => {
         <Container>
           {children}
           <br />
-          {!pending ? (
-            <pre>{JSON.stringify(geoLocation, null, 2)}</pre>
-          ) : pending && !geoLocation.error ? (
-            <span>Pending GeoLocation...</span>
+          {/* {pending ? <span>Pending...</span> : null} */}
+          {geoLocation.error ? (
+            <span>{geoLocation.error.message}</span>
           ) : (
-            <span>Need GeoLocation...</span>
+            <pre>{JSON.stringify(geoLocation, null, 2)}</pre>
           )}
         </Container>
       </Main>

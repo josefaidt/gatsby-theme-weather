@@ -15,22 +15,24 @@ const GeoReducer = (state, action) => {
 }
 
 const GeoContextProvider = ({ children }) => {
-  const geoLocation = useGeoLocation()
-  console.log(`[PROVIDER] GEO`, geoLocation)
-  const [state, dispatch] = React.useReducer(GeoReducer, geoLocation)
-  console.log(`[PROVIDER] STATE`, state)
+  const { data, error } = useGeoLocation()
+  console.log(`[PROVIDER] GEO`, { data, error })
+  const [state, dispatch] = React.useReducer(GeoReducer, { data, error })
+  // console.log(`[PROVIDER] STATE`, state)
   React.useEffect(() => {
-    console.log(`[useEffect], PENDING STATUS:`, geoLocation.pending)
+    console.log(`[useEffect] GEO DATA VS STATE`, { data, error }, state)
+
     if (
-      !geoLocation.pending &&
-      geoLocation.data.latitude !== state.data.latitude &&
-      geoLocation.data.longitude !== state.data.longitude
+      data.latitude !== state.data.latitude ||
+      data.longitude !== state.data.longitude ||
+      error !== state.error
     ) {
       console.log('[useEffect] RUNNING DISPATCH')
-      return dispatch({ type: 'update', payload: geoLocation })
+      return dispatch({ type: 'update', payload: { data, error } })
     }
+
     return () => console.log('[useEffect] RERENDERING')
-  }, [geoLocation, state.data])
+  }, [data, error, state])
   return (
     <GeoStateContext.Provider value={state}>
       <GeoDispatchContext.Provider value={dispatch}>{children}</GeoDispatchContext.Provider>

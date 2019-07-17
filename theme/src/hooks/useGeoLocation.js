@@ -17,7 +17,6 @@ const useGeolocation = (settings = defaultSettings) => {
     speed: null,
     // timestamp: Date.now(),
   })
-  const [pending, setPending] = React.useState(true)
   const [error, setError] = React.useState(null)
 
   const onChange = event => {
@@ -31,12 +30,10 @@ const useGeolocation = (settings = defaultSettings) => {
       // speed: event.coords.speed,
       // timestamp: event.timestamp,
     })
-    setPending(false)
   }
 
   const onError = error => {
     setError(error)
-    setPending(false)
   }
 
   React.useEffect(() => {
@@ -45,10 +42,13 @@ const useGeolocation = (settings = defaultSettings) => {
       setError(`GeoLocation access is disabled`)
       return
     }
-    geo.getCurrentPosition(onChange, onError, settings)
+    // geo.getCurrentPosition(onChange, onError, settings)
+    const watch = navigator.geolocation.watchPosition(onChange, onError, settings)
+
+    return () => navigator.geolocation.clearWatch(watch)
   }, [settings])
 
-  return { data: geo, pending, error }
+  return { data: geo, error }
 }
 
 export default useGeolocation
