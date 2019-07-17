@@ -2,8 +2,9 @@ import React from 'react'
 
 const defaultSettings = {
   enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0,
+  timeout: 8000,
+  // maximumAge: 0,
+  maximumAge: Infinity,
 }
 
 const useGeolocation = (settings = defaultSettings) => {

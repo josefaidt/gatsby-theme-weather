@@ -1,10 +1,11 @@
 import React from 'react'
 import { css, Global } from '@emotion/core'
-import { Layout as StyledLayout, Header, Main, Container } from 'theme-ui'
+import { Layout, Header, Main, Container } from 'theme-ui'
 import { graphql, useStaticQuery } from 'gatsby'
 import { useGeoState } from '../helpers/GeoLocation'
+import Card from './Card'
 
-const Layout = ({ children, pageContext }) => {
+const Skeleton = ({ children, pageContext }) => {
   const geoLocation = useGeoState()
   const data = useStaticQuery(graphql`
     query {
@@ -16,8 +17,10 @@ const Layout = ({ children, pageContext }) => {
     }
   `)
 
+  console.log(geoLocation)
+
   return (
-    <StyledLayout>
+    <Layout>
       <Global
         styles={css`
           body {
@@ -31,6 +34,7 @@ const Layout = ({ children, pageContext }) => {
       <Main>
         <h1>{pageContext.frontmatter.title}</h1>
         <Container>
+          <Card />
           {children}
           <br />
           {/* {pending ? <span>Pending...</span> : null} */}
@@ -41,8 +45,8 @@ const Layout = ({ children, pageContext }) => {
           )}
         </Container>
       </Main>
-    </StyledLayout>
+    </Layout>
   )
 }
 
-export default Layout
+export default Skeleton

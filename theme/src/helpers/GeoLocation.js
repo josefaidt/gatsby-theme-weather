@@ -15,7 +15,7 @@ const GeoReducer = (state, action) => {
 
 const GeoContextProvider = ({ children }) => {
   const { data, error } = useGeoLocation()
-  const [state, dispatch] = React.useReducer(GeoReducer, { data, error })
+  const [state, dispatch] = React.useReducer(GeoReducer, { data, error, pending: true })
   // console.log(`[PROVIDER] STATE`, state)
   React.useEffect(() => {
     if (
@@ -23,7 +23,7 @@ const GeoContextProvider = ({ children }) => {
       data.longitude !== state.data.longitude ||
       error !== state.error
     ) {
-      return dispatch({ type: 'update', payload: { data, error } })
+      return dispatch({ type: 'update', payload: { data, error, pending: false } })
     }
   }, [data, error, state])
   return (

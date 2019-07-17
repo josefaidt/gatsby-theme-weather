@@ -63,5 +63,12 @@ export default {
       fontSize: 5,
       lineHeight: 'heading',
     },
+    Weather: {
+      Card: {
+        width: 200,
+        height: 200,
+        background: 'text',
+      },
+    },
   },
 }
