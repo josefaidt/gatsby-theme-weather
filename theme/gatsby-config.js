@@ -1,4 +1,4 @@
-module.exports = ({ basePath = '/', apiKey = null }) => ({
+module.exports = ({ apiKey = null }) => ({
   siteMetadata: {
     title: 'Weather',
   },

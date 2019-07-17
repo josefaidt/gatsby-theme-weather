@@ -2,13 +2,10 @@ import React from 'react'
 import { css, Global } from '@emotion/core'
 import { Layout as StyledLayout, Header, Main, Container } from 'theme-ui'
 import { graphql, useStaticQuery } from 'gatsby'
-import { useGeoState, useGeoDispatch } from '../helpers/GeoLocation'
+import { useGeoState } from '../helpers/GeoLocation'
 
 const Layout = ({ children, pageContext }) => {
   const geoLocation = useGeoState()
-  useGeoDispatch({ type: 'reset' })
-  console.log(`[LAYOUT] GEO STATE`, geoLocation)
-  // const { pending, error } = geoLocation
   const data = useStaticQuery(graphql`
     query {
       site {

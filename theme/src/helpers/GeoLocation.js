@@ -5,7 +5,6 @@ const GeoStateContext = React.createContext()
 const GeoDispatchContext = React.createContext()
 
 const GeoReducer = (state, action) => {
-  console.log(`[GeoReducer]`, state, action)
   switch (action.type) {
     case 'update':
       return { ...action.payload }
@@ -16,22 +15,16 @@ const GeoReducer = (state, action) => {
 
 const GeoContextProvider = ({ children }) => {
   const { data, error } = useGeoLocation()
-  console.log(`[PROVIDER] GEO`, { data, error })
   const [state, dispatch] = React.useReducer(GeoReducer, { data, error })
   // console.log(`[PROVIDER] STATE`, state)
   React.useEffect(() => {
-    console.log(`[useEffect] GEO DATA VS STATE`, { data, error }, state)
-
     if (
       data.latitude !== state.data.latitude ||
       data.longitude !== state.data.longitude ||
       error !== state.error
     ) {
-      console.log('[useEffect] RUNNING DISPATCH')
       return dispatch({ type: 'update', payload: { data, error } })
     }
-
-    return () => console.log('[useEffect] RERENDERING')
   }, [data, error, state])
   return (
     <GeoStateContext.Provider value={state}>
