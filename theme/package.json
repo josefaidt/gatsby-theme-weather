@@ -11,18 +11,19 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "dotenv": "^8.0.0",
     "gatsby": "^2.13.21",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.14",
+    "@emotion/styled": "^10.0.14",
     "@mdx-js/mdx": "^1.0.27",
     "@mdx-js/react": "^1.0.27",
     "gatsby-plugin-mdx": "^1.0.13",
-    "gatsby-source-filesystem": "^2.1.5",
-    "@emotion/core": "^10.0.14",
-    "@emotion/styled": "^10.0.14",
     "gatsby-plugin-theme-ui": "^0.2.6",
+    "gatsby-source-filesystem": "^2.1.5",
     "theme-ui": "^0.2.13"
   },
   "keywords": [
