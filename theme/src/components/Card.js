@@ -8,7 +8,6 @@ const StyledCard = styled.div`
 `
 
 const Card = props => {
-  console.log(props.theme)
   return <StyledCard {...props}></StyledCard>
 }
 

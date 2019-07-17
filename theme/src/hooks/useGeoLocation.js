@@ -26,8 +26,8 @@ const useGeolocation = (settings = defaultSettings) => {
       // altitude: event.coords.altitude,
       // altitudeAccuracy: event.coords.altitudeAccuracy,
       // heading: event.coords.heading,
-      latitude: event.coords.latitude,
-      longitude: event.coords.longitude,
+      latitude: event.coords.latitude.toFixed(4),
+      longitude: event.coords.longitude.toFixed(4),
       // speed: event.coords.speed,
       // timestamp: event.timestamp,
     })
