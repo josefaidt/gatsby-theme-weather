@@ -9,20 +9,20 @@ const defaultSettings = {
 
 const useGeolocation = (settings = defaultSettings) => {
   const [geo, setGeo] = React.useState({
-    accuracy: null,
+    // accuracy: null,
     // altitude: null,
     // altitudeAccuracy: null,
     // heading: null,
     latitude: null,
     longitude: null,
-    speed: null,
+    // speed: null,
     // timestamp: Date.now(),
   })
   const [error, setError] = React.useState(null)
 
   const onChange = event => {
     setGeo({
-      accuracy: event.coords.accuracy,
+      // accuracy: event.coords.accuracy,
       // altitude: event.coords.altitude,
       // altitudeAccuracy: event.coords.altitudeAccuracy,
       // heading: event.coords.heading,
