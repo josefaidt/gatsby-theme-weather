@@ -2,7 +2,7 @@ import React from 'react'
 
 const defaultSettings = {
   enableHighAccuracy: true,
-  timeout: 8000,
+  timeout: 10000,
   // maximumAge: 0,
   maximumAge: Infinity,
 }
@@ -16,7 +16,6 @@ const useGeolocation = (settings = defaultSettings) => {
     latitude: null,
     longitude: null,
     // speed: null,
-    // timestamp: Date.now(),
   })
   const [error, setError] = React.useState(null)
 
@@ -29,7 +28,6 @@ const useGeolocation = (settings = defaultSettings) => {
       latitude: event.coords.latitude.toFixed(4),
       longitude: event.coords.longitude.toFixed(4),
       // speed: event.coords.speed,
-      // timestamp: event.timestamp,
     })
   }
 
