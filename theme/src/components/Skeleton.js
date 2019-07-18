@@ -6,6 +6,8 @@ import { useGeoState } from '../helpers/GeoLocation'
 import useWeather from '../hooks/useWeather'
 import ColorCards from './ColorCards'
 
+console.log(process.env.API_KEY)
+
 const Skeleton = ({ children, pageContext }) => {
   const geoLocation = useGeoState()
   const queryData = useStaticQuery(graphql`

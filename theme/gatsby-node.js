@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs')
-const mkdirp = require('mkdirp')
+// const mkdirp = require('mkdirp')
 
 exports.onPreBootstrap = ({ store, reporter }) => {
   const { program } = store.getState()
@@ -16,10 +16,22 @@ exports.onPreBootstrap = ({ store, reporter }) => {
   // })
 
   if (!fs.existsSync(envFile)) {
-    reporter.info(`.ENV file does not exist, creating...`)
+    reporter.warn(`ENV file does not exist, creating...`)
     fs.writeFile(envFile, 'API_KEY=your-key-here', err => {
       if (err) throw new Error(err)
-      reporter.info(`Successfully created environment file`)
+      reporter.info(`successfully created ENV file`)
+      reporter.panic(
+        `DarkSky API key is required to retrieve data\nSign up for a free API key: https://darksky.net/dev\n`,
+        new Error('Missing API Key')
+      )
     })
   }
+
+  if (process.env.NODE_ENV === 'development' && fs.existsSync(envFile)) {
+    reporter.info(`loading ENV file`)
+    // eslint-disable-next-line global-require
+    require('dotenv').config({ path: envFile })
+  }
 }
+
+exports.onPostBootstrap = ({ store, reporter }) => {}

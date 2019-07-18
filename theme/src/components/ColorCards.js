@@ -14,7 +14,6 @@ const ColorCards = props => {
   const {
     theme: { colors },
   } = useThemeUI()
-  console.log(colors)
 
   return (
     <StyledCards>
