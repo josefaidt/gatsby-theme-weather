@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 const StyledCard = styled.div`
   /* background-color: ${({ theme }) => theme.colors.text || 'black'}; */
   background-color: ${({ color, theme }) => color || (theme.colors.text || 'black')};
-  width: 200px;
+  width: 100%;
   height: 200px;
 `
 

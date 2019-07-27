@@ -1,3 +1,5 @@
+import { hidden } from 'ansi-colors'
+
 /**
  * This theme uses `theme-ui` under the hood.
  * @see https://theme-ui.com/
@@ -33,6 +35,7 @@ export default {
       fontFamily: 'plex',
       fontSize: 1,
       lineHeight: 'text',
+      overflow: 'hidden',
     },
     Header: {
       backgroundColor: 'primary',

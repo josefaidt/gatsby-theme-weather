@@ -5,7 +5,7 @@ const fs = require('fs')
 exports.onPreBootstrap = ({ store, reporter }) => {
   const { program } = store.getState()
 
-  const envFile = path.join(program.directory, '.env')
+  const envFile = path.join(program.directory, '.env.development')
   // const dirs = [path.join(program.directory, 'src/pages')]
 
   // dirs.forEach(dir => {
@@ -25,12 +25,6 @@ exports.onPreBootstrap = ({ store, reporter }) => {
         new Error('Missing API Key')
       )
     })
-  }
-
-  if (process.env.NODE_ENV === 'development' && fs.existsSync(envFile)) {
-    reporter.info(`loading ENV file`)
-    // eslint-disable-next-line global-require
-    require('dotenv').config({ path: envFile })
   }
 }
 

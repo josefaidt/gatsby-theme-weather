@@ -8,6 +8,13 @@ const StyledCards = styled.div`
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1rem;
   width: 100%;
+
+  @media only screen and (max-width: 768px) {
+    & {
+      grid-template-columns: repeat(2, auto);
+      grid-template-rows: auto;
+    }
+  }
 `
 
 const ColorCards = props => {

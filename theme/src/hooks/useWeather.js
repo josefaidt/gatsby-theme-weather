@@ -2,9 +2,10 @@ import React from 'react'
 
 const defaultLocation = '37.8267,-122.4233'
 const proxy = 'https://cors-anywhere.herokuapp.com'
-const forecastUrl = key => `https://api.darksky.net/forecast/${key}`
 
-const useDarkSkyWeather = (location = defaultLocation, key = process.env.API_KEY) => {
+const useDarkSkyWeather = (
+  { location, key } = { location: defaultLocation, key: process.env.API_KEY }
+) => {
   const [response, setResponse] = React.useState({})
   const [error, setError] = React.useState(null)
   const [pending, setPending] = React.useState(true)
