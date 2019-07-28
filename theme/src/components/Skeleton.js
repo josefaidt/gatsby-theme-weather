@@ -53,6 +53,7 @@ const Skeleton = ({ children, pageContext }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, pending])
+
   const queryData = useStaticQuery(graphql`
     query {
       site {
@@ -62,6 +63,11 @@ const Skeleton = ({ children, pageContext }) => {
       }
     }
   `)
+
+  const refreshData = () => {
+    setWeatherData(null)
+    localStorage.removeItem('weather')
+  }
 
   return (
     <Layout>
@@ -78,6 +84,7 @@ const Skeleton = ({ children, pageContext }) => {
       <Main>
         <h1>{pageContext.frontmatter.title}</h1>
         <Container>
+          <button onClick={refreshData}>REFRESH</button>
           <MDXProvider components={shortcodes}>{children}</MDXProvider>
           <br />
           {error ? (
