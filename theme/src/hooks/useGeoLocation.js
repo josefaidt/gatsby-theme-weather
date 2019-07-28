@@ -1,51 +1,53 @@
 import React from 'react'
 
-const useGeolocation = () => {
-  const [state, setState] = React.useState({
-    accuracy: null,
-    altitude: null,
-    altitudeAccuracy: null,
-    heading: null,
+const defaultSettings = {
+  enableHighAccuracy: true,
+  timeout: 10000,
+  // maximumAge: 0,
+  maximumAge: Infinity,
+}
+
+const useGeolocation = (settings = defaultSettings) => {
+  const [geo, setGeo] = React.useState({
+    // accuracy: null,
+    // altitude: null,
+    // altitudeAccuracy: null,
+    // heading: null,
     latitude: null,
     longitude: null,
-    speed: null,
-    loading: true,
-    timestamp: Date.now(),
+    // speed: null,
   })
-  let mounted = true
-  let watchId
+  const [error, setError] = React.useState(null)
 
-  const onEvent = event => {
-    if (mounted) {
-      setState({
-        accuracy: event.coords.accuracy,
-        altitude: event.coords.altitude,
-        altitudeAccuracy: event.coords.altitudeAccuracy,
-        heading: event.coords.heading,
-        latitude: event.coords.latitude,
-        loading: false,
-        longitude: event.coords.longitude,
-        speed: event.coords.speed,
-        timestamp: event.timestamp,
-      })
-    }
+  const onChange = event => {
+    setGeo({
+      // accuracy: event.coords.accuracy,
+      // altitude: event.coords.altitude,
+      // altitudeAccuracy: event.coords.altitudeAccuracy,
+      // heading: event.coords.heading,
+      latitude: event.coords.latitude.toFixed(4),
+      longitude: event.coords.longitude.toFixed(4),
+      // speed: event.coords.speed,
+    })
   }
 
-  const onEventError = error => {
-    mounted && React.setState(oldState => ({ ...oldState, loading: false, error }))
+  const onError = error => {
+    setError(error)
   }
 
   React.useEffect(() => {
-    navigator.geolocation.getCurrentPosition(onEvent, onEventError)
-    watchId = navigator.geolocation.watchPosition(onEvent, onEventError)
-
-    return () => {
-      mounted = false
-      navigator.geolocation.clearWatch(watchId)
+    const geo = navigator.geolocation
+    if (!geo) {
+      setError(`GeoLocation access is disabled`)
+      return
     }
-  }, [0])
+    // geo.getCurrentPosition(onChange, onError, settings)
+    const watch = navigator.geolocation.watchPosition(onChange, onError, settings)
 
-  return { geoLocation: state, pending: state.loading }
+    return () => navigator.geolocation.clearWatch(watch)
+  }, [settings])
+
+  return { data: geo, error }
 }
 
 export default useGeolocation

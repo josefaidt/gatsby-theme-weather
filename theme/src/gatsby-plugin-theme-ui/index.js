@@ -1,18 +1,24 @@
+import { hidden } from 'ansi-colors'
+
 /**
  * This theme uses `theme-ui` under the hood.
  * @see https://theme-ui.com/
  * @see https://theme-ui.com/gatsby-plugin/
  */
+
 export default {
   colors: {
-    text: '#232129',
-    background: 'whitesmoke',
+    text: '#273242',
+    background: '#FDF8F7',
+    grey: '#A09D9E',
+    peach: '#EFBDB0',
     primary: '#c6797e',
+    foam: '#E3F0E5',
   },
   fonts: {
     default:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-    josefin: 'Josefin Sans',
+    plex: 'IBM Plex Mono',
   },
   fontSizes: [16, 18, 20, 22, 27, 36],
   lineHeights: {
@@ -26,9 +32,10 @@ export default {
     Layout: {
       backgroundColor: 'background',
       color: 'text',
-      fontFamily: 'josefin',
+      fontFamily: 'plex',
       fontSize: 1,
       lineHeight: 'text',
+      overflow: 'hidden',
     },
     Header: {
       backgroundColor: 'primary',
@@ -58,6 +65,13 @@ export default {
       color: 'text',
       fontSize: 5,
       lineHeight: 'heading',
+    },
+    Weather: {
+      Card: {
+        width: 200,
+        height: 200,
+        background: 'text',
+      },
     },
   },
 }

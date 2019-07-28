@@ -24,7 +24,13 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --config ./.config/eslint.config.js --fix",
-    "*.{md|json}": "prettier --config ./.config/prettier.config.js --write"
+    "*.js": [
+      "eslint --config ./.config/eslint.config.js --fix",
+      "git add"
+    ],
+    "*.{md|json}": [
+      "prettier --config ./.config/prettier.config.js --write",
+      "git add"
+    ]
   }
 }
