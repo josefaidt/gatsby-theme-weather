@@ -15,7 +15,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
   //   }
   // })
 
-  if (!fs.existsSync(envFile)) {
+  if (!fs.existsSync(envFile) && process.env.NODE_ENV === 'development') {
     reporter.warn(`ENV file does not exist, creating...`)
     fs.writeFile(envFile, 'API_KEY=your-key-here', err => {
       if (err) throw new Error(err)
