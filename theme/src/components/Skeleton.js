@@ -10,6 +10,8 @@ const shortcodes = {
   ColorCards,
 }
 
+console.log('PROCESS ENV', process.env)
+
 const Skeleton = ({ children, pageContext }) => {
   const { data: geo, pending, error } = useGeoState()
   const [weatherData, setWeatherData] = React.useState(null)
