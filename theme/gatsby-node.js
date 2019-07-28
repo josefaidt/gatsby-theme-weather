@@ -14,6 +14,12 @@ exports.onPreBootstrap = ({ store, reporter }) => {
   //     mkdirp.sync(dir)
   //   }
   // })
+  if (!process.env.API_KEY) {
+    reporter.panic(
+      `DarkSky API key is required to retrieve data\nSign up for a free API key: https://darksky.net/dev\n`,
+      new Error('Missing API Key')
+    )
+  }
 
   if (!fs.existsSync(envFile) && process.env.NODE_ENV === 'development') {
     reporter.warn(`ENV file does not exist, creating...`)
