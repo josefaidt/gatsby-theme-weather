@@ -1,26 +1,36 @@
 import React from 'react'
 import { css, Global } from '@emotion/core'
 import { Layout, Header, Main, Container } from 'theme-ui'
-import { graphql, useStaticQuery } from 'gatsby'
+import { useStaticQuery, graphql as gql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
 import { useGeoState } from '../helpers/GeoLocation'
+// import { useKey } from '../helpers/key'
 import ColorCards from './ColorCards'
 
 const shortcodes = {
   ColorCards,
 }
 
-console.log('PROCESS ENV', process.env)
-const key = process.env.API_KEY
-
 const Skeleton = ({ children, pageContext }) => {
+  const queryData = useStaticQuery(gql`
+    query {
+      site {
+        siteMetadata {
+          title
+          apiKey
+        }
+      }
+    }
+  `)
+
   const { data: geo, pending, geoError } = useGeoState()
+  // const key = useKey()
   const [weatherData, setWeatherData] = React.useState(null)
   const [error, setError] = React.useState(null)
   React.useEffect(() => {
     async function fetchData() {
       const proxy = 'https://cors-anywhere.herokuapp.com'
-      const url = `${proxy}/https://api.darksky.net/forecast/${key}`
+      const url = `${proxy}/https://api.darksky.net/forecast/${queryData.site.siteMetadata.apiKey}`
       const { longitude, latitude } = geo
       const reqUrl = `${url}/${latitude},${longitude}`
       const response = await fetch(reqUrl)
@@ -53,16 +63,6 @@ const Skeleton = ({ children, pageContext }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, pending])
-
-  const queryData = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
 
   const refreshData = () => {
     setWeatherData(null)

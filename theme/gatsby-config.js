@@ -1,7 +1,7 @@
 module.exports = ({ apiKey = null }) => ({
   siteMetadata: {
     title: 'gatsby-theme-weather',
-    apiKey: process.env.API_KEY || apiKey,
+    apiKey: apiKey || process.env.API_KEY,
   },
   plugins: [
     'gatsby-plugin-theme-ui',
