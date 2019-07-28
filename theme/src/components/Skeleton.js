@@ -2,34 +2,48 @@ import React from 'react'
 import { css, Global } from '@emotion/core'
 import { Layout, Header, Main, Container } from 'theme-ui'
 import { graphql, useStaticQuery } from 'gatsby'
-import useWeather from '../hooks/useWeather'
+import { MDXProvider } from '@mdx-js/react'
 import { useGeoState } from '../helpers/GeoLocation'
 import ColorCards from './ColorCards'
 
-const defaultLocation = '37.8267,-122.4233'
-const proxy = 'https://cors-anywhere.herokuapp.com'
+const shortcodes = {
+  ColorCards,
+}
 
 const Skeleton = ({ children, pageContext }) => {
   const { data: geo, pending, error } = useGeoState()
   const [weatherData, setWeatherData] = React.useState(null)
-  console.log({ geo, pending, error })
   React.useEffect(() => {
     async function fetchData() {
       const key = process.env.API_KEY
-      let reqUrl = ''
+      const proxy = 'https://cors-anywhere.herokuapp.com'
       const url = `${proxy}/https://api.darksky.net/forecast/${key}`
       const { longitude, latitude } = geo
-      reqUrl = `${url}/${latitude},${longitude}`
+      const reqUrl = `${url}/${latitude},${longitude}`
       const response = await fetch(reqUrl)
       const data = await response.json()
-      console.log('DONE')
+      console.log('FETCHED DATA', data)
       await setWeatherData(data)
     }
-    if (!pending) {
+    console.log(weatherData)
+    const s = localStorage
+    const cache = s.getItem('weather')
+    if (!pending && weatherData === null && cache === null) {
       fetchData()
-    } else {
-      console.log('STILL PENDING')
+    } else if (!pending && weatherData !== null) {
+      if (cache && cache !== weatherData) {
+        console.log('MADE IT HERE')
+        localStorage.removeItem('weather')
+        localStorage.setItem('weather', JSON.stringify(weatherData))
+      } else {
+        console.log('MADE IT ELSE')
+        localStorage.setItem('weather', JSON.stringify(weatherData))
+      }
+    } else if (cache !== null && weatherData === null) {
+      console.log('CACHE NOT NULL, SETTING WEATHERDATA')
+      setWeatherData(JSON.parse(cache))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, pending])
   const queryData = useStaticQuery(graphql`
     query {
@@ -56,8 +70,7 @@ const Skeleton = ({ children, pageContext }) => {
       <Main>
         <h1>{pageContext.frontmatter.title}</h1>
         <Container>
-          <ColorCards />
-          {children}
+          <MDXProvider components={shortcodes}>{children}</MDXProvider>
           <br />
           <pre>{JSON.stringify(weatherData, null, 2)}</pre>
           {/* {pending ? <span>Pending...</span> : null} */}
