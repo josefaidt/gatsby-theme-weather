@@ -15,7 +15,8 @@ const WCurrently = props => {
   } = useThemeUI()
   console.log('data from wcurrently', data)
   console.log('PROPS from wcurrently', props)
-  if (data === null) return <h1>Loading...</h1>
+  console.log('PENDING? wcurrently', data.pending)
+  if (data.pending) return <h1>Loading...</h1>
   return (
     <StyledWCurrently theme={colors}>
       <h1>Hello from WCurrently</h1>

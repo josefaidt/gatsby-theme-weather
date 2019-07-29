@@ -7,14 +7,14 @@ const WeatherDispatchContext = React.createContext()
 const WeatherReducer = (state, action) => {
   switch (action.type) {
     case 'update':
-      return { ...action.payload }
+      return { ...action.payload, pending: false }
     case 'default':
       throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
 
 const WeatherProvider = ({ children }) => {
-  const [state, dispatch] = React.useReducer(WeatherReducer, null)
+  const [state, dispatch] = React.useReducer(WeatherReducer, { pending: true })
   return (
     <WeatherStateContext.Provider value={state}>
       <WeatherDispatchContext.Provider value={dispatch}>{children}</WeatherDispatchContext.Provider>
