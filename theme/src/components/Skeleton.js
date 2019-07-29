@@ -3,6 +3,8 @@ import { css, Global } from '@emotion/core'
 import { Layout, Header, Main, Container } from 'theme-ui'
 import { useStaticQuery, graphql as gql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
+import styled from '@emotion/styled'
+import { Renew32 } from '@carbon/icons-react'
 import { useGeoState } from '../helpers/GeoContext'
 import { WeatherProvider, useWeatherDispatch, useWeather } from '../helpers/WeatherContext'
 // import { useKey } from '../helpers/key'
@@ -13,6 +15,31 @@ const shortcodes = {
   ColorSwatch,
   WCurrently,
 }
+
+const RefreshButton = styled.button`
+  margin: 0 1rem;
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: #00000000;
+  fill: ${({ theme }) => theme.foam || 'white'};
+
+  &.animate {
+    animation-name: spin;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+`
 
 const Skeleton = ({ children, pageContext }) => {
   const queryData = useStaticQuery(gql`
@@ -26,12 +53,11 @@ const Skeleton = ({ children, pageContext }) => {
     }
   `)
 
-  const { data: geo, pending, geoError } = useGeoState()
-  // const key = useKey()
-  const [weatherData, setWeatherData] = React.useState(null)
+  const { data: geo, pending: geoPending, geoError } = useGeoState()
+  const [weatherState, setWeatherState] = React.useState(null)
   const [fetchError, setFetchError] = React.useState(null)
   const dispatch = useWeatherDispatch()
-  const weatherState = useWeather()
+  const weatherCtxState = useWeather()
   const fetchData = async () => {
     const proxy = 'https://cors-anywhere.herokuapp.com'
     const url = `${proxy}/https://api.darksky.net/forecast/${queryData.site.siteMetadata.apiKey}`
@@ -43,54 +69,55 @@ const Skeleton = ({ children, pageContext }) => {
       await setFetchError(data)
     } else {
       console.log('FETCHING: SETTING DATA')
-      await setWeatherData(data)
+      await setWeatherState(data)
       await localStorage.setItem('weather', JSON.stringify(data))
       await dispatch({ type: 'update', payload: data })
     }
   }
   React.useEffect(() => {
-    console.log('WEATHER DATA STATE', weatherData)
+    console.log('WEATHER DATA STATE', weatherState)
     const s = localStorage
     const cache = s.getItem('weather')
     // console.log('CACHE IS', cache)
-    if (!fetchError && !pending) {
-      if (weatherData === null && cache === null) {
+    if (!fetchError && !geoPending) {
+      if (weatherState === null && cache === null) {
         // neither state nor cache exist, fetch data
         fetchData()
-      } else if (weatherData === null && cache !== null) {
+      } else if (weatherState === null && cache !== null) {
         // state not set, but cache exists
         // set state, then fetch to update
         console.info('Cache exists, setting state')
         const cacheData = JSON.parse(cache)
         // setData(cacheData)
-        // setWeatherData(cacheData)
+        // setWeatherState(cacheData)
         dispatch({ type: 'update', payload: cacheData })
         fetchData()
         // if (cache) console.log('UPDATING CACHE')
-        // localStorage.setItem('weather', JSON.stringify(weatherData))
-      } else if (weatherData !== null && cache === null) {
+        // localStorage.setItem('weather', JSON.stringify(weatherState))
+      } else if (weatherState !== null && cache === null) {
         // this shouldn't happen
         // state is set, but cache is not
         // set cache
-        console.warn('Unexpected WeatherData state update, updating cache')
+        console.warn('Unexpected weatherState state update, updating cache')
         localStorage.setItem('weather', JSON.stringify(cache))
       }
-    } else if (!fetchError && pending && cache !== null) {
+    } else if (!fetchError && geoPending && cache !== null) {
       // reach for cache if exists
       const cacheData = JSON.parse(cache)
       dispatch({ type: 'update', payload: cacheData })
-    } else if (fetchError && !pending && weatherData !== null) {
+    } else if (fetchError && !geoPending && weatherState !== null) {
       // recovers from an error
       console.info('Recovering from fetching error')
-      localStorage.setItem('weather', JSON.stringify(weatherData))
-      // setData(weatherData)
-      dispatch({ type: 'update', payload: weatherData })
+      localStorage.setItem('weather', JSON.stringify(weatherState))
+      // setData(weatherState)
+      dispatch({ type: 'update', payload: weatherState })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo, pending])
+  }, [geo, geoPending])
 
-  const refreshData = () => {
-    fetchData()
+  const refreshData = async () => {
+    await dispatch({ type: 'update', payload: { pending: true } })
+    await fetchData()
   }
 
   return (
@@ -104,6 +131,12 @@ const Skeleton = ({ children, pageContext }) => {
       />
       <Header>
         <span>{queryData.site.siteMetadata.title}</span>
+        <RefreshButton
+          className={geoPending || weatherState === null ? 'animate' : ''}
+          onClick={refreshData}
+        >
+          <Renew32 />
+        </RefreshButton>
       </Header>
       <Main>
         <h1>{pageContext.frontmatter.title}</h1>
@@ -125,13 +158,13 @@ const Skeleton = ({ children, pageContext }) => {
           <MDXProvider components={shortcodes}>{children}</MDXProvider>
           <br />
           <h4 id="w-context">WEATHER CONTEXT STATE</h4>
-          <pre>{JSON.stringify(weatherState, null, 2)}</pre>
+          <pre>{JSON.stringify(weatherCtxState, null, 2)}</pre>
           ---
           <h4 id="w-state">WEATHER FETCH STATE</h4>
           {fetchError ? (
             <pre>{JSON.stringify(fetchError, null, 2)}</pre>
           ) : (
-            <pre>{JSON.stringify(weatherData, null, 2)}</pre>
+            <pre>{JSON.stringify(weatherState, null, 2)}</pre>
           )}
           {/* {pending ? <span>Pending...</span> : null} */}
           {/* {geoLocation.error ? (

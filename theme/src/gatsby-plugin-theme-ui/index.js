@@ -42,6 +42,7 @@ export default {
       color: 'background',
       fontWeight: 'bold',
       margin: 0,
+      alignItems: 'center',
       span: {
         display: 'block',
         fontSize: 3,

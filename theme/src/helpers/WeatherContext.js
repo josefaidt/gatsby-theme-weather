@@ -7,7 +7,9 @@ const WeatherDispatchContext = React.createContext()
 const WeatherReducer = (state, action) => {
   switch (action.type) {
     case 'update':
-      return { ...action.payload, pending: false }
+      return { pending: false, ...action.payload }
+    case 'clear':
+      return { ...state, pending: true }
     case 'default':
       throw new Error(`Unhandled action type: ${action.type}`)
   }
