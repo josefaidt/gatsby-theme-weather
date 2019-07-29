@@ -8,7 +8,9 @@ import theme from './src/gatsby-plugin-theme-ui/index'
 export const wrapRootElement = ({ element }) => {
   return (
     <ThemeProvider theme={theme}>
-      <GeoContextProvider>{element}</GeoContextProvider>
+      <GeoContextProvider>
+        <WeatherProvider>{element}</WeatherProvider>
+      </GeoContextProvider>
     </ThemeProvider>
   )
 }
