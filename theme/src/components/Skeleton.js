@@ -4,7 +4,7 @@ import { Layout, Header, Main, Container } from 'theme-ui'
 import { useStaticQuery, graphql as gql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
 import { useGeoState } from '../helpers/GeoContext'
-import { WeatherProvider, useWeatherDispatch, useWeatherState } from '../helpers/WeatherContext'
+import { WeatherProvider, useWeatherDispatch, useWeather } from '../helpers/WeatherContext'
 // import { useKey } from '../helpers/key'
 import ColorSwatch from './ColorSwatch'
 import WCurrently from './w-currently'
@@ -31,6 +31,7 @@ const Skeleton = ({ children, pageContext }) => {
   const [weatherData, setWeatherData] = React.useState(null)
   const [fetchError, setFetchError] = React.useState(null)
   const dispatch = useWeatherDispatch()
+  const weatherState = useWeather()
   const fetchData = async () => {
     const proxy = 'https://cors-anywhere.herokuapp.com'
     const url = `${proxy}/https://api.darksky.net/forecast/${queryData.site.siteMetadata.apiKey}`
@@ -47,6 +48,16 @@ const Skeleton = ({ children, pageContext }) => {
     }
   }
   React.useEffect(() => {
+    // const setData = async data => {
+    //   console.log('SETTING DATA', data)
+    //   if (data === weatherData) {
+    //     // if we're passing the existing state, update context
+    //     await dispatch({ type: 'update', payload: weatherData })
+    //   } else {
+    //     await setWeatherData(data)
+    //     await dispatch({ type: 'update', payload: weatherData })
+    //   }
+    // }
     console.log('WEATHER DATA STATE', weatherData)
     const s = localStorage
     const cache = s.getItem('weather')
@@ -60,7 +71,8 @@ const Skeleton = ({ children, pageContext }) => {
         // set state, then fetch to update
         console.info('Cache exists, setting state')
         const cacheData = JSON.parse(cache)
-        setWeatherData(cacheData)
+        // setData(cacheData)
+        // setWeatherData(cacheData)
         dispatch({ type: 'update', payload: cacheData })
         fetchData()
         // if (cache) console.log('UPDATING CACHE')
@@ -74,12 +86,14 @@ const Skeleton = ({ children, pageContext }) => {
       }
     } else if (!fetchError && pending) {
       const cacheData = JSON.parse(cache)
-      setWeatherData(cacheData)
+      // setData(cacheData)
+      // setWeatherData(cacheData)
       dispatch({ type: 'update', payload: cacheData })
     } else if (fetchError && !pending && weatherData !== null) {
       // recovers from an error
       console.info('Recovering from fetching error')
       localStorage.setItem('weather', JSON.stringify(weatherData))
+      // setData(weatherData)
       dispatch({ type: 'update', payload: weatherData })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,12 +119,15 @@ const Skeleton = ({ children, pageContext }) => {
         <h1>{pageContext.frontmatter.title}</h1>
         <Container>
           <button onClick={refreshData}>REFRESH</button>
-          <WeatherProvider>
-            <WCurrently></WCurrently>
-            <MDXProvider components={shortcodes}>{children}</MDXProvider>
-          </WeatherProvider>
+          {/* <WeatherProvider> */}
+          <WCurrently></WCurrently>
+          <MDXProvider components={shortcodes}>{children}</MDXProvider>
+          {/* </WeatherProvider> */}
           <br />
           <h4>Currently it is...</h4>
+          <h4>WEATHER CONTEXT STATE</h4>
+          <pre>{JSON.stringify(weatherState, null, 2)}</pre>
+          ---
           {fetchError ? (
             <pre>{JSON.stringify(fetchError, null, 2)}</pre>
           ) : (
