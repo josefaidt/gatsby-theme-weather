@@ -75,11 +75,9 @@ const Skeleton = ({ children, pageContext }) => {
         console.warn('Unexpected WeatherData state update, updating cache')
         localStorage.setItem('weather', JSON.stringify(cache))
       }
-    } else if (!fetchError && pending) {
+    } else if (!fetchError && pending && cache !== null) {
+      // reach for cache if exists
       const cacheData = JSON.parse(cache)
-      // setData(cacheData)
-      // setWeatherData(cacheData)
-      console.log('SOMEHOW MADE IT HERE')
       dispatch({ type: 'update', payload: cacheData })
     } else if (fetchError && !pending && weatherData !== null) {
       // recovers from an error
