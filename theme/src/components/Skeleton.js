@@ -23,6 +23,7 @@ const RefreshButton = styled.button`
   border: none;
   background-color: #00000000;
   fill: ${({ theme }) => theme.foam || 'white'};
+  outline: ${({ theme }) => theme.foam || 'white'};
 
   &.animate {
     animation-name: spin;
@@ -141,36 +142,26 @@ const Skeleton = ({ children, pageContext }) => {
       <Main>
         <h1>{pageContext.frontmatter.title}</h1>
         <Container>
-          <div
+          {/* <div
             style={{
-              // display: 'flex',
-              // flexDirection: 'column',
               display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              textAlign: 'right',
+              gridTemplateRows: 'repeat(2, 3rem)',
               margin: '1rem 0',
             }}
           >
-            <button onClick={refreshData}>REFRESH</button>
             <a href="#w-context">Context Data</a>
             <a href="#w-state">State Data</a>
-          </div>
+          </div> */}
           <MDXProvider components={shortcodes}>{children}</MDXProvider>
           <br />
           <h4 id="w-context">WEATHER CONTEXT STATE</h4>
           <pre>{JSON.stringify(weatherCtxState, null, 2)}</pre>
           ---
-          <h4 id="w-state">WEATHER FETCH STATE</h4>
+          {/* <h4 id="w-state">WEATHER FETCH STATE</h4>
           {fetchError ? (
             <pre>{JSON.stringify(fetchError, null, 2)}</pre>
           ) : (
             <pre>{JSON.stringify(weatherState, null, 2)}</pre>
-          )}
-          {/* {pending ? <span>Pending...</span> : null} */}
-          {/* {geoLocation.error ? (
-            <span>{geoLocation.error.message}</span>
-          ) : (
-            <pre>{JSON.stringify(geoLocation, null, 2)}</pre>
           )} */}
         </Container>
       </Main>
