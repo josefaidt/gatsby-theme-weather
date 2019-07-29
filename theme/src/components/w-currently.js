@@ -39,7 +39,7 @@ const StyledWCurrently = styled.article`
   @media only screen and (max-width: 768px) {
     header {
       grid-template-columns: 1fr;
-      grid-template-rows: 5rem 10rem;
+      grid-template-rows: 5rem auto;
 
       & > h1 {
         grid-row: 2;
@@ -78,8 +78,8 @@ const WCurrently = props => {
           <h1>{summary}</h1>
           <div className="wcurrently-icon--container">{icon}</div>
         </header>
-        <p>{Math.round(currently.temperature)}&deg;</p>
-        <p>Feels like {Math.round(currently.apparentTemperature)}&deg;</p>
+        <p>Currently it is {Math.round(currently.temperature)}&deg;F</p>
+        <p>Feels like {Math.round(currently.apparentTemperature)}&deg;F</p>
       </StyledWCurrently>
     )
   }
