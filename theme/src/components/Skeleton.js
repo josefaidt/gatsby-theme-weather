@@ -4,12 +4,14 @@ import { Layout, Header, Main, Container } from 'theme-ui'
 import { useStaticQuery, graphql as gql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
 import { useGeoState } from '../helpers/GeoContext'
-import { useWeatherDispatch, useWeatherState } from '../helpers/WeatherContext'
+import { WeatherProvider, useWeatherDispatch, useWeatherState } from '../helpers/WeatherContext'
 // import { useKey } from '../helpers/key'
-import ColorCards from './ColorCards'
+import ColorSwatch from './ColorSwatch'
+import WCurrently from './w-currently'
 
 const shortcodes = {
-  ColorCards,
+  ColorSwatch,
+  WCurrently,
 }
 
 const Skeleton = ({ children, pageContext }) => {
@@ -27,7 +29,8 @@ const Skeleton = ({ children, pageContext }) => {
   const { data: geo, pending, geoError } = useGeoState()
   // const key = useKey()
   const [weatherData, setWeatherData] = React.useState(null)
-  const [error, setError] = React.useState(null)
+  const [fetchError, setFetchError] = React.useState(null)
+  const dispatch = useWeatherDispatch()
   const fetchData = async () => {
     const proxy = 'https://cors-anywhere.herokuapp.com'
     const url = `${proxy}/https://api.darksky.net/forecast/${queryData.site.siteMetadata.apiKey}`
@@ -36,10 +39,11 @@ const Skeleton = ({ children, pageContext }) => {
     const response = await fetch(reqUrl)
     const data = await response.json()
     if (data.error) {
-      await setError(data)
+      await setFetchError(data)
     } else {
       await setWeatherData(data)
       await localStorage.setItem('weather', JSON.stringify(data))
+      await dispatch({ type: 'update', payload: data })
     }
   }
   React.useEffect(() => {
@@ -47,14 +51,17 @@ const Skeleton = ({ children, pageContext }) => {
     const s = localStorage
     const cache = s.getItem('weather')
     // console.log('CACHE IS', cache)
-    if (!error && !pending) {
+    if (!fetchError && !pending) {
       if (weatherData === null && cache === null) {
         // neither state nor cache exist, fetch data
         fetchData()
       } else if (weatherData === null && cache !== null) {
         // state not set, but cache exists
         // set state, then fetch to update
-        setWeatherData(JSON.parse(cache))
+        console.info('Cache exists, setting state')
+        const cacheData = JSON.parse(cache)
+        setWeatherData(cacheData)
+        dispatch({ type: 'update', payload: cacheData })
         fetchData()
         // if (cache) console.log('UPDATING CACHE')
         // localStorage.setItem('weather', JSON.stringify(weatherData))
@@ -65,12 +72,15 @@ const Skeleton = ({ children, pageContext }) => {
         console.warn('Unexpected WeatherData state update, updating cache')
         localStorage.setItem('weather', JSON.stringify(cache))
       }
-    } else if (!error && pending) {
-      setWeatherData(JSON.parse(cache))
-    } else if (error && !pending && weatherData !== null) {
+    } else if (!fetchError && pending) {
+      const cacheData = JSON.parse(cache)
+      setWeatherData(cacheData)
+      dispatch({ type: 'update', payload: cacheData })
+    } else if (fetchError && !pending && weatherData !== null) {
       // recovers from an error
       console.info('Recovering from fetching error')
       localStorage.setItem('weather', JSON.stringify(weatherData))
+      dispatch({ type: 'update', payload: weatherData })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, pending])
@@ -95,11 +105,14 @@ const Skeleton = ({ children, pageContext }) => {
         <h1>{pageContext.frontmatter.title}</h1>
         <Container>
           <button onClick={refreshData}>REFRESH</button>
-          <MDXProvider components={shortcodes}>{children}</MDXProvider>
+          <WeatherProvider>
+            <WCurrently></WCurrently>
+            <MDXProvider components={shortcodes}>{children}</MDXProvider>
+          </WeatherProvider>
           <br />
           <h4>Currently it is...</h4>
-          {error ? (
-            <pre>{JSON.stringify(error, null, 2)}</pre>
+          {fetchError ? (
+            <pre>{JSON.stringify(fetchError, null, 2)}</pre>
           ) : (
             <pre>{JSON.stringify(weatherData, null, 2)}</pre>
           )}

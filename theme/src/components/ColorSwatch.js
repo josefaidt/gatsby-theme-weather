@@ -17,7 +17,7 @@ const StyledCards = styled.div`
   }
 `
 
-const ColorCards = props => {
+const ColorSwatch = props => {
   const {
     theme: { colors },
   } = useThemeUI()
@@ -33,4 +33,4 @@ const ColorCards = props => {
   )
 }
 
-export default ColorCards
+export default ColorSwatch
