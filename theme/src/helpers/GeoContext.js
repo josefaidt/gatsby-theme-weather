@@ -7,6 +7,7 @@ const GeoDispatchContext = React.createContext()
 const GeoReducer = (state, action) => {
   switch (action.type) {
     case 'update':
+      localStorage.setItem('location', JSON.stringify({ ...action.payload }))
       return { ...action.payload }
     case 'default':
       throw new Error(`Unhandled action type: ${action.type}`)

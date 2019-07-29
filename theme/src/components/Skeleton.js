@@ -28,46 +28,55 @@ const Skeleton = ({ children, pageContext }) => {
   // const key = useKey()
   const [weatherData, setWeatherData] = React.useState(null)
   const [error, setError] = React.useState(null)
-  React.useEffect(() => {
-    async function fetchData() {
-      const proxy = 'https://cors-anywhere.herokuapp.com'
-      const url = `${proxy}/https://api.darksky.net/forecast/${queryData.site.siteMetadata.apiKey}`
-      const { longitude, latitude } = geo
-      const reqUrl = `${url}/${latitude},${longitude}`
-      const response = await fetch(reqUrl)
-      const data = await response.json()
-      if (data.error) {
-        await setError(data)
-      } else {
-        await setWeatherData(data)
-      }
+  const fetchData = async () => {
+    const proxy = 'https://cors-anywhere.herokuapp.com'
+    const url = `${proxy}/https://api.darksky.net/forecast/${queryData.site.siteMetadata.apiKey}`
+    const { longitude, latitude } = geo
+    const reqUrl = `${url}/${latitude},${longitude}`
+    const response = await fetch(reqUrl)
+    const data = await response.json()
+    if (data.error) {
+      await setError(data)
+    } else {
+      await setWeatherData(data)
+      await localStorage.setItem('weather', JSON.stringify(data))
     }
+  }
+  React.useEffect(() => {
     console.log('WEATHER DATA STATE', weatherData)
     const s = localStorage
     const cache = s.getItem('weather')
-    if (!error) {
-      if (!pending && weatherData === null && cache === null) {
+    // console.log('CACHE IS', cache)
+    if (!error && !pending) {
+      if (weatherData === null && cache === null) {
+        // neither state nor cache exist, fetch data
         fetchData()
-      } else if (!pending && weatherData !== null) {
-        if (cache && cache !== weatherData) {
-          console.log('MADE IT HERE')
-          localStorage.removeItem('weather')
-          localStorage.setItem('weather', JSON.stringify(weatherData))
-        } else {
-          console.log('MADE IT ELSE')
-          localStorage.setItem('weather', JSON.stringify(weatherData))
-        }
-      } else if (cache !== null && weatherData === null) {
-        console.log('CACHE NOT NULL, SETTING WEATHERDATA')
+      } else if (weatherData === null && cache !== null) {
+        // state not set, but cache exists
+        // set state, then fetch to update
         setWeatherData(JSON.parse(cache))
+        fetchData()
+        // if (cache) console.log('UPDATING CACHE')
+        // localStorage.setItem('weather', JSON.stringify(weatherData))
+      } else if (weatherData !== null && cache === null) {
+        // this shouldn't happen
+        // state is set, but cache is not
+        // set cache
+        console.warn('Unexpected WeatherData state update, updating cache')
+        localStorage.setItem('weather', JSON.stringify(cache))
       }
+    } else if (!error && pending) {
+      setWeatherData(JSON.parse(cache))
+    } else if (error && !pending && weatherData !== null) {
+      // recovers from an error
+      console.info('Recovering from fetching error')
+      localStorage.setItem('weather', JSON.stringify(weatherData))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, pending])
 
   const refreshData = () => {
-    setWeatherData(null)
-    localStorage.removeItem('weather')
+    fetchData()
   }
 
   return (
@@ -88,6 +97,7 @@ const Skeleton = ({ children, pageContext }) => {
           <button onClick={refreshData}>REFRESH</button>
           <MDXProvider components={shortcodes}>{children}</MDXProvider>
           <br />
+          <h4>Currently it is...</h4>
           {error ? (
             <pre>{JSON.stringify(error, null, 2)}</pre>
           ) : (

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useStaticQuery, graphql as gql } from 'gatsby'
 
 const WeatherStateContext = React.createContext()
 const WeatherDispatchContext = React.createContext()
