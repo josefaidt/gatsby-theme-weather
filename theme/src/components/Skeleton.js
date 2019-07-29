@@ -42,22 +42,13 @@ const Skeleton = ({ children, pageContext }) => {
     if (data.error) {
       await setFetchError(data)
     } else {
+      console.log('FETCHING: SETTING DATA')
       await setWeatherData(data)
       await localStorage.setItem('weather', JSON.stringify(data))
       await dispatch({ type: 'update', payload: data })
     }
   }
   React.useEffect(() => {
-    // const setData = async data => {
-    //   console.log('SETTING DATA', data)
-    //   if (data === weatherData) {
-    //     // if we're passing the existing state, update context
-    //     await dispatch({ type: 'update', payload: weatherData })
-    //   } else {
-    //     await setWeatherData(data)
-    //     await dispatch({ type: 'update', payload: weatherData })
-    //   }
-    // }
     console.log('WEATHER DATA STATE', weatherData)
     const s = localStorage
     const cache = s.getItem('weather')
@@ -88,6 +79,7 @@ const Skeleton = ({ children, pageContext }) => {
       const cacheData = JSON.parse(cache)
       // setData(cacheData)
       // setWeatherData(cacheData)
+      console.log('SOMEHOW MADE IT HERE')
       dispatch({ type: 'update', payload: cacheData })
     } else if (fetchError && !pending && weatherData !== null) {
       // recovers from an error

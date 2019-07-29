@@ -4,22 +4,10 @@ import { useStaticQuery, graphql as gql } from 'gatsby'
 const WeatherStateContext = React.createContext()
 const WeatherDispatchContext = React.createContext()
 
-const isEmpty = obj => {
-  if (Object.keys(obj).length !== 0) {
-    return true
-  } else {
-    return false
-  }
-}
-
 const WeatherReducer = (state, action) => {
   switch (action.type) {
     case 'update':
-      if (isEmpty(action.payload)) {
-        return { pending: true }
-      } else {
-        return { ...action.payload }
-      }
+      return { ...action.payload, pending: false }
     case 'default':
       throw new Error(`Unhandled action type: ${action.type}`)
   }
