@@ -20,13 +20,13 @@ const StyledCards = styled.div`
   width: 100%;
   height: 10rem;
 
-  @media only screen and (max-width: 768px) {
+  /* @media only screen and (max-width: 768px) {
     & {
       /* grid-template-columns: repeat(2, auto);
       grid-template-rows: auto; */
       grid-gap: 0.5rem;
     }
-  }
+  } */
 `
 
 const ColorSwatch = props => {
