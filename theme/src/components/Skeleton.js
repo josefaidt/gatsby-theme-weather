@@ -3,49 +3,14 @@ import { css, Global } from '@emotion/core'
 import { Layout, Header, Main, Container } from 'theme-ui'
 import { useStaticQuery, graphql as gql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
-import styled from '@emotion/styled'
 import { Renew32 } from '@carbon/icons-react'
 import { useGeoState } from '../helpers/GeoContext'
-import { WeatherProvider, useWeatherDispatch, useWeather } from '../helpers/WeatherContext'
-// import { useKey } from '../helpers/key'
-import ColorSwatch from './ColorSwatch'
-import WCurrently from './w-currently'
+import { useWeatherDispatch } from '../helpers/WeatherContext'
+import shortcodes from './shortcodes'
 import Footer from './Footer'
+import RefreshButton from './RefreshButton.css'
 
-const shortcodes = {
-  ColorSwatch,
-  WCurrently,
-}
-
-const RefreshButton = styled.button`
-  margin: 0 1rem;
-  display: flex;
-  align-items: center;
-  border: none;
-  background-color: #00000000;
-  fill: ${({ theme }) => theme.foam || 'white'};
-  outline: ${({ theme }) => theme.foam || 'white'};
-
-  &.animate {
-    animation-name: spin;
-    animation-duration: 2000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(-360deg);
-    }
-  }
-`
+console.log('PROCESS ENV', process.env)
 
 const Skeleton = ({ children, pageContext }) => {
   const queryData = useStaticQuery(gql`
@@ -63,7 +28,6 @@ const Skeleton = ({ children, pageContext }) => {
   const [weatherState, setWeatherState] = React.useState(null)
   const [fetchError, setFetchError] = React.useState(null)
   const dispatch = useWeatherDispatch()
-  const weatherCtxState = useWeather()
   const fetchData = async () => {
     const proxy = 'https://cors-anywhere.herokuapp.com'
     const url = `${proxy}/https://api.darksky.net/forecast/${queryData.site.siteMetadata.apiKey}`

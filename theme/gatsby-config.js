@@ -1,4 +1,4 @@
-module.exports = ({ apiKey = null }) => ({
+module.exports = ({ apiKey }) => ({
   siteMetadata: {
     title: 'gatsby-theme-weather',
     apiKey: apiKey || process.env.API_KEY,
