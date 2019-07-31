@@ -8,8 +8,8 @@ import { hidden } from 'ansi-colors'
 
 export default {
   colors: {
-    background: '#273242',
-    text: '#FDF8F7',
+    text: '#273242',
+    background: '#FDF8F7',
     grey: '#A09D9E',
     peach: '#EFBDB0',
     primary: '#c6797e',
@@ -39,7 +39,7 @@ export default {
     },
     Header: {
       backgroundColor: 'primary',
-      color: 'background',
+      color: 'foam',
       fontWeight: 'bold',
       margin: 0,
       alignItems: 'center',
