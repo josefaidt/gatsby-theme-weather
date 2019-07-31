@@ -1,16 +1,14 @@
 import React from 'react'
 import { css, Global } from '@emotion/core'
-import { Layout, Header, Main, Container } from 'theme-ui'
+import { Layout, Header, Main, Container, Footer } from 'theme-ui'
 import { useStaticQuery, graphql as gql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
 import styled from '@emotion/styled'
 import { Renew32 } from '@carbon/icons-react'
 import { useGeoState } from '../helpers/GeoContext'
-import { WeatherProvider, useWeatherDispatch, useWeather } from '../helpers/WeatherContext'
-// import { useKey } from '../helpers/key'
+import { useWeatherDispatch, useWeather } from '../helpers/WeatherContext'
 import ColorSwatch from './ColorSwatch'
 import WCurrently from './w-currently'
-import Footer from './Footer'
 
 const shortcodes = {
   ColorSwatch,
@@ -73,6 +71,7 @@ const Skeleton = ({ children, pageContext }) => {
     const data = await response.json()
     if (data.error) {
       await setFetchError(data)
+      await dispatch({ type: 'update', payload: { error: data.error } })
     } else {
       console.log('FETCHING: SETTING DATA')
       await setWeatherState(data)
@@ -139,8 +138,9 @@ const Skeleton = ({ children, pageContext }) => {
       />
       <Header>
         <span>{queryData.site.siteMetadata.title}</span>
+        {fetchError ? <p style={{ margin: 0 }}>Error: {fetchError.error}</p> : null}
         <RefreshButton
-          className={geoPending || weatherState === null ? 'animate' : ''}
+          className={(geoPending || weatherState === null) && !fetchError ? 'animate' : ''}
           onClick={refreshData}
         >
           <Renew32 />
@@ -156,6 +156,7 @@ const Skeleton = ({ children, pageContext }) => {
         <a href="https://darksky.net/poweredby/" rel="noreferrer noopener" target="_blank">
           Powered by Dark Sky
         </a>
+        built by josef
       </Footer>
     </Layout>
   )

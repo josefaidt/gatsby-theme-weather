@@ -1,19 +1,24 @@
 const path = require('path')
 const fs = require('fs')
-// const mkdirp = require('mkdirp')
+const mkdirp = require('mkdirp')
+const chalk = require('chalk')
 
 exports.onPreBootstrap = ({ store, reporter }) => {
   const { program } = store.getState()
 
   const envFile = path.join(program.directory, '.env.development')
-  // const dirs = [path.join(program.directory, 'src/pages')]
+  const dirs = [path.join(program.directory, 'src/pages')]
 
-  // dirs.forEach(dir => {
-  //   if (!fs.existsSync(dir)) {
-  //     reporter.info(`${dir} directory does not exist, creating...`)
-  //     mkdirp.sync(dir)
-  //   }
-  // })
+  dirs.forEach(dir => {
+    if (!fs.existsSync(dir)) {
+      reporter.info(
+        `${chalk.red(
+          dir.slice(dir.indexOf('src') - 1, dir.length)
+        )} directory does not exist, creating...`
+      )
+      mkdirp.sync(dir)
+    }
+  })
   // if (!process.env.API_KEY) {
   //   reporter.panic(
   //     `DarkSky API key is required to retrieve data\nSign up for a free API key: https://darksky.net/dev\n`,
@@ -33,5 +38,3 @@ exports.onPreBootstrap = ({ store, reporter }) => {
     })
   }
 }
-
-exports.onPostBootstrap = ({ store, reporter }) => {}

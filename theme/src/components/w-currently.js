@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { useThemeUI } from 'theme-ui'
 import { useWeather } from '../helpers/WeatherContext'
-import getWIcon from './w-icon'
+import WIcon from './w-icon'
 
 const StyledWCurrently = styled.article`
   background-color: ${({ theme }) => `${theme.primary}d9` || 'whitesmoke'};
@@ -50,21 +50,37 @@ const WCurrently = props => {
     theme: { colors },
   } = useThemeUI()
   console.log('data from wcurrently', data)
-  const icon = data.pending ? null : getWIcon(data.currently.icon)
-  return (
-    <StyledWCurrently theme={colors}>
-      <header>
-        <h1 className={data.pending ? 'skeleton' : ''}>{data.pending || data.currently.summary}</h1>
-        <div className={data.pending ? 'skeleton' : 'wcurrently-icon--container'}>{icon}</div>
-      </header>
-      <p className={data.pending ? 'skeleton' : ''}>
-        Currently it is {data.pending || Math.round(data.currently.temperature)}&deg;F
-      </p>
-      <p className={data.pending ? 'skeleton' : ''}>
-        Feels like {data.pending || Math.round(data.currently.apparentTemperature)}&deg;F
-      </p>
-    </StyledWCurrently>
-  )
+  if (data.pending || data.error) {
+    return (
+      <StyledWCurrently theme={colors}>
+        <header>
+          <h1>{data.pending ? 'Loading...' : data.error ? 'Error' : null}</h1>
+          <div className="wcurrently-icon--container">
+            <WIcon icon={data.pending ? 'loading' : data.error ? 'error' : 'loading'} />
+          </div>
+        </header>
+      </StyledWCurrently>
+    )
+  } else {
+    return (
+      <StyledWCurrently theme={colors}>
+        <header>
+          <h1>{data.currently.summary}</h1>
+          <div className="wcurrently-icon--container">
+            <WIcon icon={data.currently.icon} />
+          </div>
+        </header>
+        <p>
+          Currently it is {Math.round(data.currently.temperature)}
+          &deg;F
+        </p>
+        <p>
+          Feels like {Math.round(data.currently.apparentTemperature)}
+          &deg;F
+        </p>
+      </StyledWCurrently>
+    )
+  }
 }
 
 export default WCurrently
