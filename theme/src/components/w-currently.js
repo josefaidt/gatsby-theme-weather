@@ -1,16 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { useThemeUI } from 'theme-ui'
-import {
-  CloudRain32,
-  Fog32,
-  Cloud32,
-  CloudSnow32,
-  CloudLightning32,
-  Sunny32,
-  Sunset32,
-} from '@carbon/icons-react'
 import { useWeather } from '../helpers/WeatherContext'
+import getWIcon from './w-icon'
 
 const StyledWCurrently = styled.article`
   background-color: ${({ theme }) => `${theme.primary}d9` || 'whitesmoke'};
@@ -46,16 +38,11 @@ const StyledWCurrently = styled.article`
       }
     }
   }
-`
 
-const WIcon = iconType => {
-  switch (iconType) {
-    case 'rain':
-      return <CloudRain32 />
-    default:
-      return <Sunny32 />
+  .skeleton {
+    display: hidden;
   }
-}
+`
 
 const WCurrently = props => {
   const data = useWeather()
@@ -63,26 +50,21 @@ const WCurrently = props => {
     theme: { colors },
   } = useThemeUI()
   console.log('data from wcurrently', data)
-  console.log('PROPS from wcurrently', props)
-  console.log('PENDING? wcurrently', data.pending)
-  if (data.pending) return <h1>Loading...</h1>
-  else {
-    const {
-      currently,
-      hourly: { summary },
-    } = data
-    const icon = WIcon(currently.icon)
-    return (
-      <StyledWCurrently theme={colors}>
-        <header>
-          <h1>{summary}</h1>
-          <div className="wcurrently-icon--container">{icon}</div>
-        </header>
-        <p>Currently it is {Math.round(currently.temperature)}&deg;F</p>
-        <p>Feels like {Math.round(currently.apparentTemperature)}&deg;F</p>
-      </StyledWCurrently>
-    )
-  }
+  const icon = data.pending ? null : getWIcon(data.currently.icon)
+  return (
+    <StyledWCurrently theme={colors}>
+      <header>
+        <h1 className={data.pending ? 'skeleton' : ''}>{data.pending || data.currently.summary}</h1>
+        <div className={data.pending ? 'skeleton' : 'wcurrently-icon--container'}>{icon}</div>
+      </header>
+      <p className={data.pending ? 'skeleton' : ''}>
+        Currently it is {data.pending || Math.round(data.currently.temperature)}&deg;F
+      </p>
+      <p className={data.pending ? 'skeleton' : ''}>
+        Feels like {data.pending || Math.round(data.currently.apparentTemperature)}&deg;F
+      </p>
+    </StyledWCurrently>
+  )
 }
 
 export default WCurrently

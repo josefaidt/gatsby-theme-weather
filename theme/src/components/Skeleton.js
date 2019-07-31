@@ -10,6 +10,7 @@ import { WeatherProvider, useWeatherDispatch, useWeather } from '../helpers/Weat
 // import { useKey } from '../helpers/key'
 import ColorSwatch from './ColorSwatch'
 import WCurrently from './w-currently'
+import Footer from './Footer'
 
 const shortcodes = {
   ColorSwatch,
@@ -30,6 +31,10 @@ const RefreshButton = styled.button`
     animation-duration: 2000ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 
   @keyframes spin {
@@ -90,8 +95,8 @@ const Skeleton = ({ children, pageContext }) => {
         console.info('Cache exists, setting state')
         const cacheData = JSON.parse(cache)
         // setData(cacheData)
-        // setWeatherState(cacheData)
-        dispatch({ type: 'update', payload: cacheData })
+        setWeatherState(cacheData)
+        // dispatch({ type: 'update', payload: cacheData })
         fetchData()
         // if (cache) console.log('UPDATING CACHE')
         // localStorage.setItem('weather', JSON.stringify(weatherState))
@@ -104,7 +109,9 @@ const Skeleton = ({ children, pageContext }) => {
       }
     } else if (!fetchError && geoPending && cache !== null) {
       // reach for cache if exists
+      // TODO: rewrite since now handling cache fetch on context initialization
       const cacheData = JSON.parse(cache)
+      setWeatherState(cacheData)
       dispatch({ type: 'update', payload: cacheData })
     } else if (fetchError && !geoPending && weatherState !== null) {
       // recovers from an error
@@ -142,29 +149,14 @@ const Skeleton = ({ children, pageContext }) => {
       <Main>
         <h1>{pageContext.frontmatter.title}</h1>
         <Container>
-          {/* <div
-            style={{
-              display: 'grid',
-              gridTemplateRows: 'repeat(2, 3rem)',
-              margin: '1rem 0',
-            }}
-          >
-            <a href="#w-context">Context Data</a>
-            <a href="#w-state">State Data</a>
-          </div> */}
           <MDXProvider components={shortcodes}>{children}</MDXProvider>
-          <br />
-          <h4 id="w-context">WEATHER CONTEXT STATE</h4>
-          <pre>{JSON.stringify(weatherCtxState, null, 2)}</pre>
-          ---
-          {/* <h4 id="w-state">WEATHER FETCH STATE</h4>
-          {fetchError ? (
-            <pre>{JSON.stringify(fetchError, null, 2)}</pre>
-          ) : (
-            <pre>{JSON.stringify(weatherState, null, 2)}</pre>
-          )} */}
         </Container>
       </Main>
+      <Footer>
+        <a href="https://darksky.net/poweredby/" rel="noreferrer noopener" target="_blank">
+          Powered by Dark Sky
+        </a>
+      </Footer>
     </Layout>
   )
 }

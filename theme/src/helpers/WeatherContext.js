@@ -16,7 +16,8 @@ const WeatherReducer = (state, action) => {
 }
 
 const WeatherProvider = ({ children }) => {
-  const [state, dispatch] = React.useReducer(WeatherReducer, { pending: true })
+  const cachedData = JSON.parse(localStorage.getItem('weather'))
+  const [state, dispatch] = React.useReducer(WeatherReducer, { data: cachedData, pending: true })
   return (
     <WeatherStateContext.Provider value={state}>
       <WeatherDispatchContext.Provider value={dispatch}>{children}</WeatherDispatchContext.Provider>

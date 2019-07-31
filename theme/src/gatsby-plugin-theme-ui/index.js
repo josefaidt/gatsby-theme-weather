@@ -8,8 +8,8 @@ import { hidden } from 'ansi-colors'
 
 export default {
   colors: {
-    text: '#273242',
-    background: '#FDF8F7',
+    background: '#273242',
+    text: '#FDF8F7',
     grey: '#A09D9E',
     peach: '#EFBDB0',
     primary: '#c6797e',
