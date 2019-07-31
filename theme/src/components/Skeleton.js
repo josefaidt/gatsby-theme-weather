@@ -9,8 +9,6 @@ import { useWeatherDispatch } from '../helpers/WeatherContext'
 import shortcodes from './shortcodes'
 import RefreshButton from './RefreshButton.css'
 
-console.log('PROCESS ENV', process.env)
-
 const Skeleton = ({ children, pageContext }) => {
   const queryData = useStaticQuery(gql`
     query {
@@ -62,8 +60,6 @@ const Skeleton = ({ children, pageContext }) => {
         // setWeatherState(cacheData)
         dispatch({ type: 'update', payload: cacheData })
         fetchData()
-        // if (cache) console.log('UPDATING CACHE')
-        // localStorage.setItem('weather', JSON.stringify(weatherState))
       } else if (weatherState !== null && cache === null) {
         // this shouldn't happen
         // state is set, but cache is not
@@ -103,7 +99,9 @@ const Skeleton = ({ children, pageContext }) => {
       />
       <Header>
         <span>{queryData.site.siteMetadata.title}</span>
-        {fetchError ? <p style={{ margin: 0 }}>Error: {fetchError.error}</p> : null}
+        {fetchError || geoError ? (
+          <p style={{ margin: 0 }}>Error: {fetchError.error || geoError}</p>
+        ) : null}
         <RefreshButton
           className={(geoPending || weatherState === null) && !fetchError ? 'animate' : ''}
           onClick={refreshData}
@@ -121,7 +119,6 @@ const Skeleton = ({ children, pageContext }) => {
         <a href="https://darksky.net/poweredby/" rel="noreferrer noopener" target="_blank">
           Powered by Dark Sky
         </a>
-        built by josef
       </Footer>
     </Layout>
   )

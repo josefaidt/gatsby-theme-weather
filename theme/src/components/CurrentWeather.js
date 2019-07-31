@@ -12,6 +12,15 @@ const StyledWCurrently = styled.article`
   margin: 1rem 0;
   border-radius: 0.5rem;
 
+  font-weight: bold;
+
+  & > span#wcurrently-time {
+    font-size: 0.9rem;
+    position: relative;
+    top: -1.5rem;
+    display: block;
+  }
+
   header {
     display: grid;
     grid-template-columns: 90% 10%;
@@ -49,7 +58,6 @@ const WCurrently = props => {
   const {
     theme: { colors },
   } = useThemeUI()
-  console.log('data from wcurrently', data)
   if (data.pending || data.error) {
     return (
       <StyledWCurrently theme={colors}>
@@ -62,6 +70,8 @@ const WCurrently = props => {
       </StyledWCurrently>
     )
   } else {
+    const currentDate = new Date(data.currently.time * 1000)
+    const currentTime = currentDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
     return (
       <StyledWCurrently theme={colors}>
         <header>
@@ -70,6 +80,7 @@ const WCurrently = props => {
             <WIcon icon={data.currently.icon} />
           </div>
         </header>
+        <span id="wcurrently-time">{currentTime}</span>
         <p>
           Currently it is {Math.round(data.currently.temperature)}
           &deg;F

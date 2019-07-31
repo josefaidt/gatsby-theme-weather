@@ -1,7 +1,9 @@
 import ColorSwatch from './ColorSwatch'
-import WCurrently from './w-currently'
+import CurrentWeather from './CurrentWeather'
+import CurrentTime from './CurrentTime'
 
 export default {
   ColorSwatch,
-  WCurrently,
+  CurrentWeather,
+  CurrentTime,
 }
