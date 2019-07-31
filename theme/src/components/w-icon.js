@@ -12,10 +12,39 @@ import {
   Hurricane32,
   PartlyCloudy32,
   Temperature32, // for F to C toggle?
+  FaceDissatisfied32,
 } from '@carbon/icons-react'
+import styled from '@emotion/styled'
 
-const getWIcon = iconType => {
-  switch (iconType) {
+const Loading = styled.div`
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+
+  &:after {
+    content: ' ';
+    display: block;
+    width: 46px;
+    height: 46px;
+    margin: 1px;
+    border-radius: 50%;
+    border: 5px solid ${({ theme }) => theme.foam || 'white'};
+    border-color: ${({ theme }) => theme.foam || 'white'} transparent
+      ${({ theme }) => theme.foam || 'white'} transparent;
+    animation: spin-two-ring 1.2s linear infinite;
+  }
+  @keyframes spin-two-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`
+
+const WIcon = ({ icon }) => {
+  switch (icon) {
     case 'rain':
       return <CloudRain32 />
     case 'clear-day':
@@ -38,9 +67,13 @@ const getWIcon = iconType => {
       return <PartlyCloudy32 />
     case 'thunderstorm':
       return <CloudLightning32 />
+    case 'error':
+      return <FaceDissatisfied32 />
+    case 'loading':
+      return <Loading />
     default:
-      return <Sunny32 />
+      return <span>...</span>
   }
 }
 
-export default getWIcon
+export default WIcon

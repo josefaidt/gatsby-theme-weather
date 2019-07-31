@@ -43,6 +43,7 @@ export default {
       fontWeight: 'bold',
       margin: 0,
       alignItems: 'center',
+      justifyContent: 'space-between',
       span: {
         display: 'block',
         fontSize: 3,
@@ -62,17 +63,14 @@ export default {
       paddingBottom: 3,
       paddingTop: 3,
     },
+    Footer: {
+      margin: '0 1rem',
+      justifyContent: 'space-between',
+    },
     h1: {
       color: 'text',
       fontSize: 5,
       lineHeight: 'heading',
-    },
-    Weather: {
-      Card: {
-        width: 200,
-        height: 200,
-        background: 'text',
-      },
     },
   },
 }
