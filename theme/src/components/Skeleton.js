@@ -95,7 +95,7 @@ const Skeleton = ({ children, pageContext }) => {
         console.info('Cache exists, setting state')
         const cacheData = JSON.parse(cache)
         // setData(cacheData)
-        setWeatherState(cacheData)
+        // setWeatherState(cacheData)
         dispatch({ type: 'update', payload: cacheData })
         fetchData()
         // if (cache) console.log('UPDATING CACHE')

@@ -16,8 +16,9 @@ const WeatherReducer = (state, action) => {
 }
 
 const WeatherProvider = ({ children }) => {
-  const cachedData = localStorage && JSON.parse(localStorage.getItem('weather'))
-  const [state, dispatch] = React.useReducer(WeatherReducer, { data: cachedData, pending: true })
+  // TODO: useEffect to update context when localStorage is available
+  // const cachedData = localStorage && JSON.parse(localStorage.getItem('weather'))
+  const [state, dispatch] = React.useReducer(WeatherReducer, { pending: true })
   return (
     <WeatherStateContext.Provider value={state}>
       <WeatherDispatchContext.Provider value={dispatch}>{children}</WeatherDispatchContext.Provider>
