@@ -47,7 +47,7 @@ To use this theme in your Gatsby sites, follow these instructions:
    API_KEY=your-api-key-here
    ```
 
-6. Dynamically load ENV file based on NODE_ENV (_Note: this is automatically set to `development` by Gatsby in development mode_)
+6. Dynamically load ENV file based on `NODE_ENV` (\*Note: this is automatically set to `development` by Gatsby in development mode\*)
 
    ```js
    // gatsby-config.js
@@ -80,7 +80,20 @@ To use this theme in your Gatsby sites, follow these instructions:
 
 In the context of production deployments, ensure the `API_KEY` environment variable is appropriately set.
 
-## Customizing Theme
+## Customization
+
+Each piece in this theme is customizable, however it is important to note the `Skeleton` will be our core data layer component and should not be shadowed without careful consideration. Please refer to the Theme UI container styles to modify styles of our other core components (Header, Footer, Main, Container, etc.).
+
+### Components
+
+All _weather_ related components will be prefixed with a `W`, for example `WCurrently`, and their files are named in kebab case: `w-currently.js`
+
+| Component Name | Type           | Filename         |
+| -------------- | -------------- | ---------------- |
+| `WCurrently`   | Card component | `w-currently.js` |
+| `WIcon`        | Icon component | `w-icon.js`      |
+
+### Theme
 
 This theme uses Theme UI for MDX. To customize the color palette, shadow the Theme UI configuration file.
 
