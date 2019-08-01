@@ -6,7 +6,7 @@ const WeatherDispatchContext = React.createContext()
 const WeatherReducer = (state, action) => {
   switch (action.type) {
     case 'update':
-      return { pending: false, ...action.payload }
+      return { ...state, pending: false, ...action.payload }
     case 'clear':
       return { ...state, pending: true }
     case 'default':
