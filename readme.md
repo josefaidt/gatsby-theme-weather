@@ -84,14 +84,28 @@ In the context of production deployments, ensure the `API_KEY` environment varia
 
 Each piece in this theme is customizable, however it is important to note the `Skeleton` will be our core data layer component and should not be shadowed without careful consideration. Please refer to the Theme UI container styles to modify styles of our other core components (Header, Footer, Main, Container, etc.).
 
+### Options
+
+This theme accepts a few options for functionality, as well as modifying the experience.
+
+| Option            | Value Type | Default Value |
+| ----------------- | ---------- | ------------- |
+| `apiKey`          | `String`   | n/a           |
+| `refreshInterval` | `Integer`  | 10            |
+
+_Note: `refreshInterval` is expressed in minutes_
+
 ### Components
 
-All _weather_ related components will be prefixed with a `W`, for example `WCurrently`, and their files are named in kebab case: `w-currently.js`
+Below is a table of available components to shadow and use as shortcodes in MDX.
 
-| Component Name | Type           | Filename         |
-| -------------- | -------------- | ---------------- |
-| `WCurrently`   | Card component | `w-currently.js` |
-| `WIcon`        | Icon component | `w-icon.js`      |
+| Filename            | Component Name          | Type           | Description                                             |
+| ------------------- | ----------------------- | -------------- | ------------------------------------------------------- |
+| `ColorSwatch.js`    | `ColorSwatch`           | Card component | Displays current color palette                          |
+| `CurrentWeather.js` | `CurrentWeather`        | Card component | Displays current weather in a card                      |
+| `CurrentTime.js`    | `CurrentTime`           | Time component | Displays current time (12-hour, 2-digit minute format)  |
+| `w-icon.js`         | `WIcon`                 | Icon component | Used to retrieve appropriate icon based on `props.icon` |
+| `Card.js`           | `Card` `{ StyledCard }` | Card component | Base card and named `StyledCard` export for wrapping    |
 
 ### Theme
 
