@@ -25,6 +25,7 @@ const GeoContextProvider = ({ children }) => {
       error !== state.error
     ) {
       if (data.latitude === null && data.longitude === null) {
+        console.warn('GEO STATE IS NULL, READING FROM CACHE')
         const cachedGeo = JSON.parse(localStorage.getItem('location'))
         return dispatch({ type: 'update', payload: { data: cachedGeo, error, pending: false } })
       } else {
