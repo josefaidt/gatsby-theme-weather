@@ -25,15 +25,14 @@ const Skeleton = ({ children, pageContext }) => {
   const [weatherState, setWeatherState] = React.useState(null)
   const [fetchError, setFetchError] = React.useState(null)
   const dispatch = useWeatherDispatch()
-  const fetchData = async () => {
+  const fetchData = async (latitude, longitude) => {
     const proxy = 'https://cors-anywhere.herokuapp.com'
     const url = `${proxy}/https://api.darksky.net/forecast/${queryData.site.siteMetadata.apiKey}`
-    const { longitude, latitude } = geo
     const reqUrl = `${url}/${latitude},${longitude}`
     const response = await fetch(reqUrl)
     const data = await response.json()
     if (data.error) {
-      await setFetchError(data)
+      await setFetchError(data.error)
       await dispatch({ type: 'update', payload: { error: data.error } })
     } else {
       console.log('FETCHING: SETTING DATA')
@@ -50,16 +49,14 @@ const Skeleton = ({ children, pageContext }) => {
     if (!fetchError && !geoPending) {
       if (weatherState === null && cache === null) {
         // neither state nor cache exist, fetch data
-        fetchData()
+        fetchData(geo.latitude, geo.longitude)
       } else if (weatherState === null && cache !== null) {
         // state not set, but cache exists
         // set state, then fetch to update
         console.info('Cache exists, setting state')
         const cacheData = JSON.parse(cache)
-        // setData(cacheData)
-        // setWeatherState(cacheData)
         dispatch({ type: 'update', payload: cacheData })
-        fetchData()
+        fetchData(geo.latitude, geo.longitude)
       } else if (weatherState !== null && cache === null) {
         // this shouldn't happen
         // state is set, but cache is not
@@ -67,12 +64,6 @@ const Skeleton = ({ children, pageContext }) => {
         console.warn('Unexpected weatherState state update, updating cache')
         localStorage.setItem('weather', JSON.stringify(cache))
       }
-    } else if (!fetchError && geoPending && cache !== null) {
-      // reach for cache if exists
-      // TODO: rewrite since now handling cache fetch on context initialization
-      const cacheData = JSON.parse(cache)
-      setWeatherState(cacheData)
-      dispatch({ type: 'update', payload: cacheData })
     } else if (fetchError && !geoPending && weatherState !== null) {
       // recovers from an error
       console.info('Recovering from fetching error')
@@ -100,7 +91,7 @@ const Skeleton = ({ children, pageContext }) => {
       <Header>
         <span>{queryData.site.siteMetadata.title}</span>
         {fetchError || geoError ? (
-          <p style={{ margin: 0 }}>Error: {fetchError.error || geoError}</p>
+          <p style={{ margin: 0 }}>Error: {fetchError || geoError}</p>
         ) : null}
         <RefreshButton
           className={(geoPending || weatherState === null) && !fetchError ? 'animate' : ''}
