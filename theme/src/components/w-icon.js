@@ -17,15 +17,17 @@ import {
 import styled from '@emotion/styled'
 
 const Loading = styled.div`
-  display: inline-block;
-  width: 64px;
-  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 
   &:after {
     content: ' ';
     display: block;
-    width: 46px;
-    height: 46px;
+    width: 32px;
+    height: 32px;
     margin: 1px;
     border-radius: 50%;
     border: 5px solid ${({ theme }) => theme.foam || 'white'};
