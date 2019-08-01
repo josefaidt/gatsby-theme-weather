@@ -6,7 +6,9 @@ A weather dashboard [Gatsby theme](https://www.gatsbyjs.org/docs/themes/), compo
 
 - MDX composition with custom shortcodes
 - Theme UI-based theming
+- Geolocation-provided weather
 - Weather context state hook available for custom components - `useWeather`
+- Refresh interval for data fetching
 
 ## Installation
 
