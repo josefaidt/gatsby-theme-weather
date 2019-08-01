@@ -60,10 +60,10 @@ const Skeleton = ({ children, pageContext }) => {
       console.log('FETCHING: SETTING DATA')
       await setWeatherState(data)
       await localStorage.setItem('weather', JSON.stringify(data))
-      await dispatch({ type: 'update', payload: data })
+      await dispatch({ type: 'update', payload: { ...data, error: null } })
     }
   }
-  console.log(geo)
+  console.log(geo, geoPending, geoError)
   React.useEffect(() => {
     console.log('WEATHER DATA STATE', weatherState)
     const s = localStorage
