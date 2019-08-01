@@ -4,4 +4,9 @@ const toLocalTime = unixTimestamp => {
   return currentTime
 }
 
-export { toLocalTime }
+const toLocalDate = unixTimestamp => {
+  const currentDate = new Date(unixTimestamp * 1000)
+  return currentDate.toLocaleDateString([], { month: 'short', day: '2-digit', year: 'numeric' })
+}
+
+export { toLocalTime, toLocalDate }
