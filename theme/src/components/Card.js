@@ -4,7 +4,7 @@ import { useThemeUI } from 'theme-ui'
 
 const StyledCard = styled.article`
   background-color: ${({ theme }) => `${theme.primary}d9` || 'whitesmoke'};
-  color: ${({ theme }) => theme.foam || 'black'};
+  color: ${({ theme }) => theme.accent || 'black'};
 
   padding: 1rem;
   margin: 1rem 0;
@@ -30,7 +30,7 @@ const StyledCard = styled.article`
   }
 
   svg {
-    fill: ${({ theme }) => theme.foam || 'black'};
+    fill: ${({ theme }) => theme.accent || 'black'};
     transform: scale(1.5);
   }
 

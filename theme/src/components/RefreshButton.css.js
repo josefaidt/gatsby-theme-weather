@@ -6,8 +6,8 @@ const RefreshButton = styled.button`
   align-items: center;
   border: none;
   background-color: #00000000;
-  fill: ${({ theme }) => theme.foam || 'white'};
-  outline: ${({ theme }) => theme.foam || 'white'};
+  fill: ${({ theme }) => theme.accent || 'white'};
+  outline: ${({ theme }) => theme.accent || 'white'};
 
   &.animate {
     animation-name: spin;

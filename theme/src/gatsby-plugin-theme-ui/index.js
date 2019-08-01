@@ -10,15 +10,14 @@ export default {
   colors: {
     text: '#273242',
     background: '#FDF8F7',
-    grey: '#A09D9E',
-    peach: '#EFBDB0',
+    muted: '#A09D9E',
+    secondary: '#EFBDB0',
     primary: '#c6797e',
-    foam: '#E3F0E5',
+    accent: '#E3F0E5',
   },
   fonts: {
     default:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-    plex: 'IBM Plex Mono',
   },
   fontSizes: [16, 18, 20, 22, 27, 36],
   lineHeights: {
@@ -32,14 +31,17 @@ export default {
     Layout: {
       backgroundColor: 'background',
       color: 'text',
-      fontFamily: 'plex',
+      fontFamily: 'default',
       fontSize: 1,
       lineHeight: 'text',
       overflow: 'hidden',
+
+      backgroundImage:
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23a09d9e' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E",
     },
     Header: {
       backgroundColor: 'primary',
-      color: 'foam',
+      color: 'accent',
       fontWeight: 'bold',
       margin: 0,
       alignItems: 'center',

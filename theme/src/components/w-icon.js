@@ -30,9 +30,9 @@ const Loading = styled.div`
     height: 32px;
     margin: 1px;
     border-radius: 50%;
-    border: 5px solid ${({ theme }) => theme.foam || 'white'};
-    border-color: ${({ theme }) => theme.foam || 'white'} transparent
-      ${({ theme }) => theme.foam || 'white'} transparent;
+    border: 5px solid ${({ theme }) => theme.accent || 'white'};
+    border-color: ${({ theme }) => theme.accent || 'white'} transparent
+      ${({ theme }) => theme.accent || 'white'} transparent;
     animation: spin-two-ring 1.2s linear infinite;
   }
   @keyframes spin-two-ring {

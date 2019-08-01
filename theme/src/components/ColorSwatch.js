@@ -37,10 +37,10 @@ const ColorSwatch = props => {
   return (
     <StyledCards>
       <Card color={colors.text} />
-      <Card color={colors.grey} />
+      <Card color={colors.muted} />
       <Card color={colors.primary} />
-      <Card color={colors.peach} />
-      <Card color={colors.foam} />
+      <Card color={colors.secondary} />
+      <Card color={colors.accent} />
     </StyledCards>
   )
 }
