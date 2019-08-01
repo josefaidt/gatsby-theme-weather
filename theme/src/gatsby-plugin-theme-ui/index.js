@@ -65,7 +65,8 @@ export default {
     },
     Footer: {
       margin: '0 1rem',
-      justifyContent: 'space-between',
+      fontSize: '1rem',
+      justifyContent: 'center',
     },
     h1: {
       color: 'text',
