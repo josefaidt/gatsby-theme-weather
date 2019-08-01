@@ -86,12 +86,14 @@ Each piece in this theme is customizable, however it is important to note the `S
 
 ### Components
 
-All _weather_ related components will be prefixed with a `W`, for example `WCurrently`, and their files are named in kebab case: `w-currently.js`
+Below is a table of available components to shadow and use as shortcodes in MDX.
 
-| Component Name | Type           | Filename         |
-| -------------- | -------------- | ---------------- |
-| `WCurrently`   | Card component | `w-currently.js` |
-| `WIcon`        | Icon component | `w-icon.js`      |
+| Filename            | Component Name   | Type           | Description                                             |
+| ------------------- | ---------------- | -------------- | ------------------------------------------------------- |
+| `ColorSwatch.js`    | `ColorSwatch`    | Card component | Displays current color palette                          |
+| `CurrentWeather.js` | `CurrentWeather` | Card component | Displays current weather in a card                      |
+| `CurrentTime.js`    | `CurrentTime`    | Time component | Displays current time (12-hour, 2-digit minute format)  |
+| `w-icon.js`         | `WIcon`          | Icon component | Used to retrieve appropriate icon based on `props.icon` |
 
 ### Theme
 
