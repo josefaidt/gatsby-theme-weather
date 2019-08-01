@@ -1,11 +1,10 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import { useWeather } from '../helpers/WeatherContext'
 import { toLocalDate } from '../helpers/util'
 import WIcon from './w-icon'
 import Card from './Card'
 
-const TodaysWeather = props => {
+const TodaysWeather = ({ children }) => {
   const data = useWeather()
   console.log('TODAYS WEATHER DATA', data)
   const currentDay = data.pending || data.error ? null : toLocalDate(data.currently.time)
@@ -18,6 +17,7 @@ const TodaysWeather = props => {
         </div>
       </header>
       <span className="datetime">{data.pending || data.error ? '--' : currentDay}</span>
+      {children}
     </Card>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import { useWeather } from '../helpers/WeatherContext'
 import { toLocalTime } from '../helpers/util'
 
@@ -9,7 +8,7 @@ const CurrentTime = props => {
   if (data.error) return <p>Error</p>
   else {
     const currentTime = toLocalTime(data.currently.time)
-    return <p>{currentTime}</p>
+    return <p {...props}>{currentTime}</p>
   }
 }
 

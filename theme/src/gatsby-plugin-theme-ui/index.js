@@ -1,11 +1,3 @@
-import { hidden } from 'ansi-colors'
-
-/**
- * This theme uses `theme-ui` under the hood.
- * @see https://theme-ui.com/
- * @see https://theme-ui.com/gatsby-plugin/
- */
-
 export default {
   colors: {
     text: '#273242',
