@@ -13,5 +13,16 @@ module.exports = {
         apiKey: process.env.API_KEY,
       },
     },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `gatsby-theme-weather`,
+        short_name: `weather`,
+        start_url: `/`,
+        background_color: `#FDF8F7`,
+        theme_color: `#c6797e`,
+        display: `standalone`,
+      },
+    },
   ],
 }
