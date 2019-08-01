@@ -9,6 +9,26 @@ import { useWeatherDispatch } from '../helpers/WeatherContext'
 import shortcodes from './shortcodes'
 import RefreshButton from './RefreshButton.css'
 
+const useInterval = (callback, delay) => {
+  const savedCallback = React.useRef()
+
+  // Remember the latest callback.
+  React.useEffect(() => {
+    savedCallback.current = callback
+  }, [callback])
+
+  // Set up the interval.
+  React.useEffect(() => {
+    function tick() {
+      savedCallback.current()
+    }
+    if (delay !== null) {
+      const id = setInterval(tick, delay)
+      return () => clearInterval(id)
+    }
+  }, [delay])
+}
+
 const Skeleton = ({ children, pageContext }) => {
   const queryData = useStaticQuery(gql`
     query {
@@ -16,6 +36,7 @@ const Skeleton = ({ children, pageContext }) => {
         siteMetadata {
           title
           apiKey
+          refreshInterval
         }
       }
     }
@@ -41,6 +62,7 @@ const Skeleton = ({ children, pageContext }) => {
       await dispatch({ type: 'update', payload: data })
     }
   }
+  console.log(geo)
   React.useEffect(() => {
     console.log('WEATHER DATA STATE', weatherState)
     const s = localStorage
@@ -55,8 +77,13 @@ const Skeleton = ({ children, pageContext }) => {
         // set state, then fetch to update
         console.info('Cache exists, setting state')
         const cacheData = JSON.parse(cache)
+        const { data: geoCache } = JSON.parse(localStorage.getItem('location'))
         dispatch({ type: 'update', payload: cacheData })
-        fetchData(geo.latitude, geo.longitude)
+        if (geoCache.latitude && geoCache.longitude) {
+          fetchData(geoCache.latitude, geoCache.longitude)
+        } else {
+          fetchData(geo.latitude, geo.longitude)
+        }
       } else if (weatherState !== null && cache === null) {
         // this shouldn't happen
         // state is set, but cache is not
@@ -74,9 +101,15 @@ const Skeleton = ({ children, pageContext }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, geoPending])
 
+  const interval = queryData.site.siteMetadata.refreshInterval
+  useInterval(() => {
+    console.info(`Setting fetch interval for ${interval} minutes`)
+    refreshData()
+  }, interval * 60 * 1000)
+
   const refreshData = async () => {
     await dispatch({ type: 'update', payload: { pending: true } })
-    await fetchData()
+    await fetchData(geo.latitude, geo.longitude)
   }
 
   return (
