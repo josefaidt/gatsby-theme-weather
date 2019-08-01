@@ -2,11 +2,23 @@
 
 A weather dashboard [Gatsby theme](https://www.gatsbyjs.org/docs/themes/), composed using [MDX](https://mdxjs.com/) and [Theme UI](https://theme-ui.com/), powered by [Dark Sky](https://darksky.net/dev).
 
+<p align="center">
+  <a href="https://github.com/josefaidt/gatsby-theme-weather">
+    <img
+      alt="gatsby-theme-weather screenshot"
+      src="https://raw.githubusercontent.com/josefaidt/gatsby-theme-weather/master/images/screenshot-0.0.3.png"
+      width="1000"
+    />
+  </a>
+</p>
+
 ## Features
 
 - MDX composition with custom shortcodes
 - Theme UI-based theming
+- Geolocation-provided weather
 - Weather context state hook available for custom components - `useWeather`
+- Refresh interval for data fetching
 
 ## Installation
 
