@@ -103,7 +103,7 @@ This theme accepts a few options for functionality, as well as modifying the exp
 | Option            | Value Type | Default Value |
 | ----------------- | ---------- | ------------- |
 | `apiKey`          | `String`   | n/a           |
-| `refreshInterval` | `Integer`  | 10            |
+| `refreshInterval` | `Integer`  | 20            |
 
 _Note: `refreshInterval` is expressed in minutes_
 
