@@ -13,6 +13,7 @@ import {
   PartlyCloudy32,
   Temperature32, // for F to C toggle?
   FaceDissatisfied32,
+  FaceDizzy32,
 } from '@carbon/icons-react'
 import styled from '@emotion/styled'
 
@@ -70,7 +71,7 @@ const WIcon = ({ icon }) => {
     case 'thunderstorm':
       return <CloudLightning32 />
     case 'error':
-      return <FaceDissatisfied32 />
+      return <FaceDizzy32 />
     case 'loading':
       return <Loading />
     default:

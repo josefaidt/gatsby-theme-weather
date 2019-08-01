@@ -24,7 +24,12 @@ const GeoContextProvider = ({ children }) => {
       data.longitude !== state.data.longitude ||
       error !== state.error
     ) {
-      return dispatch({ type: 'update', payload: { data, error, pending: false } })
+      if (data.latitude === null && data.longitude === null) {
+        const cachedGeo = JSON.parse(localStorage.getItem('location'))
+        return dispatch({ type: 'update', payload: { data: cachedGeo, error, pending: false } })
+      } else {
+        return dispatch({ type: 'update', payload: { data, error, pending: false } })
+      }
     }
   }, [data, error, state])
   return (
