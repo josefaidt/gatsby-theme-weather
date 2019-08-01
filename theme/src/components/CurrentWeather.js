@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { useThemeUI } from 'theme-ui'
 import { useWeather } from '../helpers/WeatherContext'
+import { toLocalTime } from '../helpers/util'
 import WIcon from './w-icon'
 
 const StyledWCurrently = styled.article`
@@ -53,45 +54,34 @@ const StyledWCurrently = styled.article`
   }
 `
 
-const WCurrently = props => {
+const CurrentWeather = props => {
   const data = useWeather()
   const {
     theme: { colors },
   } = useThemeUI()
-  if (data.pending || data.error) {
-    return (
-      <StyledWCurrently theme={colors}>
-        <header>
-          <h1>{data.pending ? 'Loading...' : data.error ? 'Error' : null}</h1>
-          <div className="wcurrently-icon--container">
-            <WIcon icon={data.pending ? 'loading' : data.error ? 'error' : 'loading'} />
-          </div>
-        </header>
-      </StyledWCurrently>
-    )
-  } else {
-    const currentDate = new Date(data.currently.time * 1000)
-    const currentTime = currentDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
-    return (
-      <StyledWCurrently theme={colors}>
-        <header>
-          <h1>{data.currently.summary}</h1>
-          <div className="wcurrently-icon--container">
-            <WIcon icon={data.currently.icon} />
-          </div>
-        </header>
-        <span id="wcurrently-time">{currentTime}</span>
-        <p>
-          Currently it is {Math.round(data.currently.temperature)}
-          &deg;F
-        </p>
-        <p>
-          Feels like {Math.round(data.currently.apparentTemperature)}
-          &deg;F
-        </p>
-      </StyledWCurrently>
-    )
-  }
+  console.log('CURRENTWEATHER DATA', data)
+  const currentTime = data.pending || data.error ? null : toLocalTime(data.currently.time)
+  return (
+    <StyledWCurrently theme={colors}>
+      <header>
+        <h1>{data.pending ? 'Loading...' : data.error ? 'Error' : data.currently.summary}</h1>
+        <div className="wcurrently-icon--container">
+          <WIcon icon={data.pending ? 'loading' : data.error ? 'error' : data.currently.icon} />
+        </div>
+      </header>
+      <span id="wcurrently-time">{data.pending || data.error ? '--' : currentTime}</span>
+      <p>
+        Currently it is {data.pending || data.error ? '--' : Math.round(data.currently.temperature)}
+        &deg;F
+      </p>
+      <p>
+        Feels like{' '}
+        {data.pending || data.error ? '--' : Math.round(data.currently.apparentTemperature)}
+        &deg;F
+      </p>
+    </StyledWCurrently>
+  )
+  // }
 }
 
-export default WCurrently
+export default CurrentWeather
