@@ -60,4 +60,13 @@ const useGeoDispatch = () => {
   return context
 }
 
-export { GeoContextProvider, useGeoState, useGeoDispatch }
+const useGeo = () => {
+  const stateContext = React.useContext(GeoStateContext)
+  const dispatchContext = React.useContext(GeoDispatchContext)
+  if (dispatchContext === undefined && stateContext === undefined) {
+    throw new Error('useGeo must be used within a GeoProvider')
+  }
+  return [stateContext, dispatchContext]
+}
+
+export { GeoContextProvider, useGeoState, useGeoDispatch, useGeo }

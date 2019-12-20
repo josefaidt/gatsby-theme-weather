@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 
 const RefreshButton = styled.button`
   margin: 0 1rem;

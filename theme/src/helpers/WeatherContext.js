@@ -6,9 +6,9 @@ const WeatherDispatchContext = React.createContext()
 const WeatherReducer = (state, action) => {
   switch (action.type) {
     case 'update':
-      return { ...state, pending: false, ...action.payload }
+      return { ...state, ...action.payload }
     case 'clear':
-      return { ...state, pending: true }
+      return { ...state }
     case 'default':
       throw new Error(`Unhandled action type: ${action.type}`)
   }
@@ -17,7 +17,7 @@ const WeatherReducer = (state, action) => {
 const WeatherProvider = ({ children }) => {
   // TODO: useEffect to update context when localStorage is available
   // const cachedData = localStorage && JSON.parse(localStorage.getItem('weather'))
-  const [state, dispatch] = React.useReducer(WeatherReducer, { pending: true })
+  const [state, dispatch] = React.useReducer(WeatherReducer, {})
   return (
     <WeatherStateContext.Provider value={state}>
       <WeatherDispatchContext.Provider value={dispatch}>{children}</WeatherDispatchContext.Provider>
@@ -25,7 +25,7 @@ const WeatherProvider = ({ children }) => {
   )
 }
 
-const useWeather = () => {
+const useWeatherState = () => {
   const context = React.useContext(WeatherStateContext)
   if (context === undefined) {
     throw new Error('useWeather must be used within a WeatherProvider')
@@ -41,4 +41,13 @@ const useWeatherDispatch = () => {
   return context
 }
 
-export { WeatherProvider, useWeather, useWeatherDispatch }
+const useWeather = () => {
+  const stateContext = React.useContext(WeatherStateContext)
+  const dispatchContext = React.useContext(WeatherDispatchContext)
+  if (dispatchContext === undefined && stateContext === undefined) {
+    throw new Error('useWeather must be used within a WeatherProvider')
+  }
+  return [stateContext, dispatchContext]
+}
+
+export { WeatherProvider, useWeather, useWeatherDispatch, useWeatherState }

@@ -5,13 +5,10 @@ module.exports = ({ apiKey, refreshInterval = 20 }) => ({
     refreshInterval, // in minutes
   },
   plugins: [
-    'gatsby-plugin-theme-ui',
     {
-      resolve: `gatsby-plugin-mdx`,
+      resolve: 'gatsby-plugin-page-creator',
       options: {
-        defaultLayouts: {
-          default: require.resolve('./src/components/Skeleton.js'),
-        },
+        path: `src/pages`,
       },
     },
   ],

@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "start": "yarn clean; yarn develop",
+    "start": "yarn develop",
     "build": "yarn clean; gatsby build",
     "develop": "gatsby develop",
-    "clean": "rm -rf .cache",
+    "clean": "gatsby clean",
     "serve": "gatsby serve"
   },
   "dependencies": {

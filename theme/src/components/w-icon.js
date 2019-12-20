@@ -15,7 +15,7 @@ import {
   FaceDissatisfied32,
   FaceDizzy32,
 } from '@carbon/icons-react'
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 
 const Loading = styled.div`
   display: flex;

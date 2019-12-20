@@ -1,10 +1,10 @@
 import React from 'react'
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 import { useThemeUI } from 'theme-ui'
 
 const StyledCard = styled.div`
   /* background-color: ${({ theme }) => theme.colors.text || 'black'}; */
-  background-color: ${({ color, theme }) => color || (theme.colors.text || 'black')};
+  background-color: ${({ color, theme }) => color || theme.colors.text || 'black'};
   width: 100%;
   height: 100%;
 `

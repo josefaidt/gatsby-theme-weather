@@ -6,7 +6,7 @@ const chalk = require('chalk')
 exports.onPreBootstrap = ({ store, reporter }) => {
   const { program } = store.getState()
 
-  const envFile = path.join(program.directory, '.env.development')
+  // const envFile = path.join(program.directory, '.env.development')
   const dirs = [path.join(program.directory, 'src/pages')]
 
   dirs.forEach(dir => {
@@ -26,15 +26,15 @@ exports.onPreBootstrap = ({ store, reporter }) => {
   //   )
   // }
 
-  if (!fs.existsSync(envFile) && process.env.NODE_ENV === 'development') {
-    reporter.warn(`ENV file does not exist, creating...`)
-    fs.writeFile(envFile, 'API_KEY=your-key-here', err => {
-      if (err) throw new Error(err)
-      reporter.info(`successfully created ENV file`)
-      reporter.panic(
-        `DarkSky API key is required to retrieve data\nSign up for a free API key: https://darksky.net/dev\n`,
-        new Error('Missing API Key')
-      )
-    })
-  }
+  // if (!fs.existsSync(envFile) && process.env.NODE_ENV === 'development') {
+  //   reporter.warn(`ENV file does not exist, creating...`)
+  //   fs.writeFile(envFile, 'API_KEY=your-key-here', err => {
+  //     if (err) throw new Error(err)
+  //     reporter.info(`successfully created ENV file`)
+  //     reporter.panic(
+  //       `DarkSky API key is required to retrieve data\nSign up for a free API key: https://darksky.net/dev\n`,
+  //       new Error('Missing API Key')
+  //     )
+  //   })
+  // }
 }
