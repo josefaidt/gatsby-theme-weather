@@ -6,6 +6,7 @@ import Card from './Card'
 
 const CurrentWeather = props => {
   const data = useWeather()
+  const { pending, error } = data
   console.log('CURRENTWEATHER DATA', data)
   const currentTime = data.pending || data.error ? null : toLocalTime(data.currently.time)
   return (
