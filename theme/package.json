@@ -6,25 +6,25 @@
   "author": "josef <josef.aidt@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.13.45",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^2.18.16",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
-    "gatsby": "^2.13.45",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^2.18.16",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "dependencies": {
-    "@carbon/icons-react": "^10.4.1",
-    "@emotion/core": "^10.0.14",
-    "@emotion/styled": "^10.0.14",
-    "@mdx-js/mdx": "^1.1.4",
-    "@mdx-js/react": "^1.1.4",
-    "gatsby-plugin-mdx": "^1.0.19",
-    "gatsby-plugin-theme-ui": "^0.2.25",
-    "gatsby-source-filesystem": "^2.1.7",
-    "theme-ui": "^0.2.25"
+    "@carbon/icons-react": "^10.8.0",
+    "@emotion/core": "^10.0.22",
+    "@emotion/styled": "^10.0.23",
+    "@mdx-js/mdx": "^1.5.3",
+    "@mdx-js/react": "^1.5.3",
+    "gatsby-plugin-mdx": "^1.0.64",
+    "gatsby-plugin-theme-ui": "^0.2.53",
+    "gatsby-source-filesystem": "^2.1.43",
+    "theme-ui": "^0.2.52"
   },
   "keywords": [
     "gatsby",
