@@ -949,6 +949,11 @@
     eslint-plugin-svelte3 "^2.7.3"
     prettier "^1.19.1"
 
+"@josefaidt/prettier-config@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@josefaidt/prettier-config/-/prettier-config-0.0.2.tgz#7b6ae7b08fb927a6f2342fa17dd93fb31693a08b"
+  integrity sha512-M0hSg7yYWkxtwnSwOy1XG7u+pJFz7py/MMOTCIqp3eVvOW+dytZcFGsVQXlbmTHXgBd4d43XpK3FbL9+ujLG6g==
+
 "@mikaelkristiansson/domready@^1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@mikaelkristiansson/domready/-/domready-1.0.9.tgz#b2b85d8ac7bb2797e577050b61aeaf1b26fbd906"
