@@ -1,8 +1,8 @@
 import React from 'react'
-import { useWeather } from '../helpers/WeatherContext'
-import { toLocalTime } from '../helpers/util'
+import { useWeather } from '../../helpers/WeatherContext'
+import { toLocalTime } from '../../helpers/util'
+import Card from '../Card'
 import WIcon from './w-icon'
-import Card from './Card'
 
 const CurrentWeather = props => {
   const data = useWeather()

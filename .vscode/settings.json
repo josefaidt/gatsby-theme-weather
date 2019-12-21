@@ -1,5 +1,0 @@
-{
-  "eslint.options": {
-    "configFile": ".config/eslint.config.js"
-  }
-}

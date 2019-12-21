@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const RefreshButton = styled.button`
-  margin: 0 1rem;
+  margin: 0;
   display: flex;
   align-items: center;
   border: none;

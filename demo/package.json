@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "start": "yarn develop",
+    "start": "yarn clean; yarn develop",
     "build": "yarn clean; gatsby build",
     "develop": "gatsby develop",
     "clean": "gatsby clean",

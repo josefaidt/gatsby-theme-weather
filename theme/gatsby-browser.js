@@ -9,7 +9,7 @@ import theme from './src/theme'
 export const wrapRootElement = ({ element }) => {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
+      <GlobalStyle colors={theme.colors} />
       <GeoContextProvider>
         <WeatherProvider>{element}</WeatherProvider>
       </GeoContextProvider>
