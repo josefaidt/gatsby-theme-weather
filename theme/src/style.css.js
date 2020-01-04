@@ -626,7 +626,8 @@ pre tt:after {
 
 /* colors */
 body {
-  color: ${props => (props.colors.background ? 'white' : 'black')};
+  background-color: ${({ theme }) => theme.colors.background || 'white'};
+  color: ${({ theme }) => theme.colors.text || 'black'};
   font-family: ${props => props.theme.fontFamily};
 }
 `

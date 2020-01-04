@@ -47,10 +47,11 @@ const Header = ({ children, title }) => {
     }
   `)
   React.useEffect(() => {
-    if (!geoState.pending && !weatherState) {
-      setIsRefreshing(false)
+    if (!geoState.pending && weatherState) {
+      console.log('MADE IT HERE')
+      return setIsRefreshing(false)
     }
-  }, [geoState, weatherState])
+  }, [geoState.pending, weatherState])
 
   const refreshData = () => {
     setIsRefreshing(true)
@@ -61,15 +62,8 @@ const Header = ({ children, title }) => {
     <StyledHeader theme={theme}>
       <h1>{title || queryData.site.siteMetadata.title}</h1>
       {children}
-      {/* {fetchError || geoError ? (
-          <p style={{ margin: 0 }}>Error: {fetchError || geoError}</p>
-        ) : null} */}
       <div className="gtw--header-button__toggle">
-        <RefreshButton
-          className={isRefreshing ? 'animate' : ''}
-          onClick={refreshData}
-          // onClick={() => {}}
-        >
+        <RefreshButton className={isRefreshing ? 'animate' : ''} onClick={refreshData}>
           <Renew32 />
         </RefreshButton>
       </div>
