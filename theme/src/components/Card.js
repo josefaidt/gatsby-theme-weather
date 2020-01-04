@@ -1,10 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
-import { useThemeUI } from 'theme-ui'
+import styled, { ThemeContext } from 'styled-components'
 
 const StyledCard = styled.article`
-  background-color: ${({ theme }) => `${theme.primary}d9` || 'whitesmoke'};
-  color: ${({ theme }) => theme.accent || 'black'};
+  background-color: ${({ theme }) => `${theme.colors.primary}d9` || 'whitesmoke'};
+  color: ${({ theme }) => theme.colors.accent || 'black'};
 
   padding: 1rem;
   margin: 1rem 0;
@@ -30,7 +29,7 @@ const StyledCard = styled.article`
   }
 
   svg {
-    fill: ${({ theme }) => theme.accent || 'black'};
+    fill: ${({ theme }) => theme.colors.accent || 'black'};
     transform: scale(1.5);
   }
 
@@ -47,10 +46,8 @@ const StyledCard = styled.article`
 `
 
 const Card = props => {
-  const {
-    theme: { colors },
-  } = useThemeUI()
-  return <StyledCard theme={colors} {...props} />
+  const theme = React.useContext(ThemeContext)
+  return <StyledCard theme={theme} {...props} />
 }
 
 export { StyledCard }

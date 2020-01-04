@@ -24,6 +24,9 @@
     "parserOptions": {
       "ecmaVersion": 9,
       "sourceType": "module"
+    },
+    "rules": {
+      "eslint(no-extra-boolean-cast)": 0
     }
   },
   "prettier": "@josefaidt/prettier-config",

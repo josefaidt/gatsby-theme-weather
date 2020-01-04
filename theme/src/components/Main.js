@@ -1,16 +1,28 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 
-const StyledMain = styled.main`
-  /*  */
-  max-width: 90vw;
-  @media screen and (min-width: 768px) {
-    max-width: 50vw;
+const StyledMainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  main {
+    margin: 3rem 0;
+    max-width: 90vw;
+    color: ${({ theme }) => theme.colors.text || 'black'};
+    @media screen and (min-width: 768px) {
+      max-width: 50vw;
+    }
   }
 `
 
 const Main = props => {
-  return <StyledMain>{props.children}</StyledMain>
+  const theme = React.useContext(ThemeContext)
+  return (
+    <StyledMainContainer theme={theme}>
+      <main>{props.children}</main>
+    </StyledMainContainer>
+  )
 }
 
 export default Main

@@ -16,27 +16,16 @@ const GeoReducer = (state, action) => {
 
 const GeoContextProvider = ({ children }) => {
   const { data, error } = useGeoLocation()
-  const [state, dispatch] = React.useReducer(GeoReducer, { data, error })
-  // console.log(`[PROVIDER] STATE`, state)
-  // React.useEffect(() => {
-  //   if (
-  //     data.latitude !== state.data.latitude ||
-  //     data.longitude !== state.data.longitude ||
-  //     error !== state.error
-  //   ) {
-  //     if (data.latitude === null && data.longitude === null) {
-  //       if (!localStorage) {
-  //         console.warn('GEO STATE IS NULL, LOCALSTORAGE is unavailable, skipping...')
-  //       } else {
-  //         console.warn('GEO STATE IS NULL, READING FROM CACHE')
-  //         const cachedGeo = JSON.parse(localStorage.getItem('location'))
-  //         return dispatch({ type: 'update', payload: { data: cachedGeo, error, pending: false } })
-  //       }
-  //     } else {
-  //       return dispatch({ type: 'update', payload: { data, error, pending: false } })
-  //     }
-  //   }
-  // }, [data, error, state])
+  const [state, dispatch] = React.useReducer(GeoReducer, { data, error, pending: true })
+  React.useEffect(() => {
+    if (
+      data.latitude !== state.data.latitude ||
+      data.longitude !== state.data.longitude ||
+      error !== state.error
+    ) {
+      return dispatch({ type: 'update', payload: { data, error, pending: false } })
+    }
+  }, [data, error, state])
   return (
     <GeoStateContext.Provider value={state}>
       <GeoDispatchContext.Provider value={dispatch}>{children}</GeoDispatchContext.Provider>

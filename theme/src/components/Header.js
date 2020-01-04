@@ -5,7 +5,8 @@ import styled, { ThemeContext } from 'styled-components'
 import RefreshButton from './RefreshButton.css'
 
 const StyledHeader = styled.header`
-  background-color: ${props => props.theme.colors.primary || 'white'};
+  background-color: ${({ theme }) => theme.colors.primary || 'white'};
+  color: ${({ theme }) => theme.colors.background || 'black'};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,6 +20,13 @@ const StyledHeader = styled.header`
   p,
   span {
     margin: 0;
+  }
+
+  .gtw--header-button__toggle {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 1fr;
+    grid-gap: 0.5rem;
   }
 `
 
@@ -40,13 +48,15 @@ const Header = ({ children, title }) => {
       {/* {fetchError || geoError ? (
           <p style={{ margin: 0 }}>Error: {fetchError || geoError}</p>
         ) : null} */}
-      <RefreshButton
-        // className={(geoPending || weatherState === null) && !fetchError ? 'animate' : ''}
-        // onClick={refreshData}
-        onClick={() => {}}
-      >
-        <Renew32 />
-      </RefreshButton>
+      <div className="gtw--header-button__toggle">
+        <RefreshButton
+          // className={(geoPending || weatherState === null) && !fetchError ? 'animate' : ''}
+          // onClick={refreshData}
+          onClick={() => {}}
+        >
+          <Renew32 />
+        </RefreshButton>
+      </div>
     </StyledHeader>
   )
 }

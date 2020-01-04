@@ -3,6 +3,15 @@ const fs = require('fs')
 const mkdirp = require('mkdirp')
 const chalk = require('chalk')
 
+exports.onCreateNode = ({ node, actions }) => {
+  const { createNode, createNodeField } = actions
+  // Transform the new node here and create a new node or
+  // create a new node field.
+  if (node.internal.type === 'SitePage') {
+    console.log(node)
+  }
+}
+
 exports.onPreBootstrap = ({ store, reporter }) => {
   const { program } = store.getState()
 
