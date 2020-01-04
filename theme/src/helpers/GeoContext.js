@@ -9,7 +9,7 @@ const GeoReducer = (state, action) => {
     case 'update':
       // localStorage.setItem('location', JSON.stringify({ ...action.payload }))
       return { ...action.payload }
-    case 'default':
+    default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }
 }

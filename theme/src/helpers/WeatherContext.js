@@ -9,7 +9,7 @@ const WeatherReducer = (state, action) => {
       return { ...state, ...action.payload }
     case 'clear':
       return null
-    case 'default':
+    default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
