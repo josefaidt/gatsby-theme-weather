@@ -32,13 +32,13 @@ const Skeleton = ({ children, title }) => {
       return weatherDispatch({ type: 'update', payload: data })
     }
     console.log('WEATHER STATE IS', weatherState)
-    console.log('GEO STATE IS', geoState.data)
-    if (!!weatherState && geoState.data.latitude) {
+    console.log('GEO STATE IS', geoState)
+    if (!weatherState && geoState.data.latitude) {
       console.log('MADE IT HERE')
       getWeather()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geoState])
+  }, [geoState, weatherState])
   return (
     <StyledLayout>
       {children}

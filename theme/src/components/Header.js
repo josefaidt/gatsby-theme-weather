@@ -2,6 +2,8 @@ import React from 'react'
 import { Renew32 } from '@carbon/icons-react'
 import { useStaticQuery, graphql } from 'gatsby'
 import styled, { ThemeContext } from 'styled-components'
+import { useGeoState } from '../helpers/GeoContext'
+import { useWeather } from '../helpers/WeatherContext'
 import RefreshButton from './RefreshButton.css'
 
 const StyledHeader = styled.header`
@@ -32,6 +34,9 @@ const StyledHeader = styled.header`
 
 const Header = ({ children, title }) => {
   const theme = React.useContext(ThemeContext)
+  const [isRefreshing, setIsRefreshing] = React.useState(true)
+  const geoState = useGeoState()
+  const [weatherState, weatherDispatch] = useWeather()
   const queryData = useStaticQuery(graphql`
     query {
       site {
@@ -41,6 +46,17 @@ const Header = ({ children, title }) => {
       }
     }
   `)
+  React.useEffect(() => {
+    if (!geoState.pending && !weatherState) {
+      setIsRefreshing(false)
+    }
+  }, [geoState, weatherState])
+
+  const refreshData = () => {
+    setIsRefreshing(true)
+    weatherDispatch({ type: 'clear' })
+  }
+
   return (
     <StyledHeader theme={theme}>
       <h1>{title || queryData.site.siteMetadata.title}</h1>
@@ -50,9 +66,9 @@ const Header = ({ children, title }) => {
         ) : null} */}
       <div className="gtw--header-button__toggle">
         <RefreshButton
-          // className={(geoPending || weatherState === null) && !fetchError ? 'animate' : ''}
-          // onClick={refreshData}
-          onClick={() => {}}
+          className={isRefreshing ? 'animate' : ''}
+          onClick={refreshData}
+          // onClick={() => {}}
         >
           <Renew32 />
         </RefreshButton>

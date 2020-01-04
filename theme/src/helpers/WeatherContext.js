@@ -8,7 +8,7 @@ const WeatherReducer = (state, action) => {
     case 'update':
       return { ...state, ...action.payload }
     case 'clear':
-      return { ...state }
+      return null
     case 'default':
       throw new Error(`Unhandled action type: ${action.type}`)
   }
@@ -17,7 +17,7 @@ const WeatherReducer = (state, action) => {
 const WeatherProvider = ({ children }) => {
   // TODO: useEffect to update context when localStorage is available
   // const cachedData = localStorage && JSON.parse(localStorage.getItem('weather'))
-  const [state, dispatch] = React.useReducer(WeatherReducer, {})
+  const [state, dispatch] = React.useReducer(WeatherReducer, null)
   return (
     <WeatherStateContext.Provider value={state}>
       <WeatherDispatchContext.Provider value={dispatch}>{children}</WeatherDispatchContext.Provider>
