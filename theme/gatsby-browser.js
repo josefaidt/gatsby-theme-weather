@@ -1,16 +1,21 @@
 import React from 'react'
-import { ThemeProvider } from 'theme-ui'
+import { ThemeProvider } from 'styled-components'
 import { GeoContextProvider } from './src/helpers/GeoContext'
 import { WeatherProvider } from './src/helpers/WeatherContext'
-import theme from './src/gatsby-plugin-theme-ui/index'
+import { NotificationProvider } from './src/helpers/NotificationContext'
+import GlobalStyle from './src/style.css'
+import theme from './src/theme'
 
 // eslint-disable-next-line react/display-name
 export const wrapRootElement = ({ element }) => {
   return (
     <ThemeProvider theme={theme}>
-      <GeoContextProvider>
-        <WeatherProvider>{element}</WeatherProvider>
-      </GeoContextProvider>
+      <GlobalStyle theme={theme} />
+      <NotificationProvider>
+        <GeoContextProvider>
+          <WeatherProvider>{element}</WeatherProvider>
+        </GeoContextProvider>
+      </NotificationProvider>
     </ThemeProvider>
   )
 }

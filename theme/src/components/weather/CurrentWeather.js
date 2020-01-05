@@ -1,11 +1,12 @@
 import React from 'react'
-import { useWeather } from '../helpers/WeatherContext'
-import { toLocalTime } from '../helpers/util'
+import { useWeather } from '../../helpers/WeatherContext'
+import { toLocalTime } from '../../helpers/util'
+import Card from '../Card'
 import WIcon from './w-icon'
-import Card from './Card'
 
 const CurrentWeather = props => {
   const data = useWeather()
+  const { pending, error } = data
   console.log('CURRENTWEATHER DATA', data)
   const currentTime = data.pending || data.error ? null : toLocalTime(data.currently.time)
   return (

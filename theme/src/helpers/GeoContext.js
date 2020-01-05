@@ -1,5 +1,6 @@
 import React from 'react'
 import useGeoLocation from '../hooks/useGeoLocation'
+import { useNotificationDispatch } from './NotificationContext'
 
 const GeoStateContext = React.createContext()
 const GeoDispatchContext = React.createContext()
@@ -7,9 +8,9 @@ const GeoDispatchContext = React.createContext()
 const GeoReducer = (state, action) => {
   switch (action.type) {
     case 'update':
-      localStorage.setItem('location', JSON.stringify({ ...action.payload }))
+      // localStorage.setItem('location', JSON.stringify({ ...action.payload }))
       return { ...action.payload }
-    case 'default':
+    default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }
 }
@@ -17,26 +18,40 @@ const GeoReducer = (state, action) => {
 const GeoContextProvider = ({ children }) => {
   const { data, error } = useGeoLocation()
   const [state, dispatch] = React.useReducer(GeoReducer, { data, error, pending: true })
-  // console.log(`[PROVIDER] STATE`, state)
+  const notificationDispatch = useNotificationDispatch()
   React.useEffect(() => {
     if (
       data.latitude !== state.data.latitude ||
       data.longitude !== state.data.longitude ||
       error !== state.error
     ) {
-      if (data.latitude === null && data.longitude === null) {
-        if (!localStorage) {
-          console.warn('GEO STATE IS NULL, LOCALSTORAGE is unavailable, skipping...')
-        } else {
-          console.warn('GEO STATE IS NULL, READING FROM CACHE')
-          const cachedGeo = JSON.parse(localStorage.getItem('location'))
-          return dispatch({ type: 'update', payload: { data: cachedGeo, error, pending: false } })
-        }
+      if (error) {
+        notificationDispatch({
+          type: 'create',
+          payload: {
+            type: 'error',
+            content: {
+              title: 'Issue with GeoLocation',
+              description:
+                'There is an issue with retrieving the GeoLocation from your browser. Are you in incognito mode?',
+            },
+          },
+        })
       } else {
-        return dispatch({ type: 'update', payload: { data, error, pending: false } })
+        notificationDispatch({
+          type: 'create',
+          payload: {
+            type: 'info',
+            content: {
+              title: 'GeoLocation Loaded',
+              description: 'GeoLocation loaded successfully',
+            },
+          },
+        })
       }
+      return dispatch({ type: 'update', payload: { data, error, pending: false } })
     }
-  }, [data, error, state])
+  }, [data, error, notificationDispatch, state])
   return (
     <GeoStateContext.Provider value={state}>
       <GeoDispatchContext.Provider value={dispatch}>{children}</GeoDispatchContext.Provider>
@@ -60,4 +75,13 @@ const useGeoDispatch = () => {
   return context
 }
 
-export { GeoContextProvider, useGeoState, useGeoDispatch }
+const useGeo = () => {
+  const stateContext = React.useContext(GeoStateContext)
+  const dispatchContext = React.useContext(GeoDispatchContext)
+  if (dispatchContext === undefined && stateContext === undefined) {
+    throw new Error('useGeo must be used within a GeoProvider')
+  }
+  return [stateContext, dispatchContext]
+}
+
+export { GeoContextProvider, useGeoState, useGeoDispatch, useGeo }
