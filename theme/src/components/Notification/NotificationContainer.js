@@ -25,7 +25,7 @@ const NotificationContainer = ({ children, notifications }) => {
   return (
     <StyledNotificationContainer>
       {children}
-      {notificationState.length &&
+      {notificationState.length > 0 &&
         notificationState.map((n, i) => {
           return (
             <motion.div
