@@ -8,11 +8,19 @@ module.exports = options => {
     },
     plugins: [
       'gatsby-plugin-styled-components',
+      'gatsby-plugin-react-helmet',
+      {
+        resolve: 'gatsby-source-filesystem',
+        options: {
+          name: `images`,
+          path: `${__dirname}/images/`,
+        },
+      },
       {
         resolve: `gatsby-plugin-manifest`,
         options: {
           name: `gatsby-theme-weather`,
-          icon: path.join(__dirname, 'img/favicon.png'),
+          icon: path.join(__dirname, 'images/favicon.png'),
           short_name: `weather`,
           start_url: `/`,
           background_color: `#FDF8F7`,
