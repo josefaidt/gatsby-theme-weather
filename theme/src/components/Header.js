@@ -55,10 +55,13 @@ const Header = ({ children, title }) => {
     }
   `)
   React.useEffect(() => {
+    if (geoState.error) {
+      return setIsRefreshing(false)
+    }
     if (!geoState.pending && weatherState) {
       return setIsRefreshing(false)
     }
-  }, [geoState.pending, weatherState])
+  }, [geoState, geoState.pending, weatherState])
 
   const refreshData = () => {
     setIsRefreshing(true)
