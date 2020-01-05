@@ -628,7 +628,12 @@ pre tt:after {
 body {
   background-color: ${({ theme }) => theme.colors.background || 'white'};
   color: ${({ theme }) => theme.colors.text || 'black'};
-  font-family: ${props => props.theme.fontFamily};
+  h1,h2,h3,h4,h5,p,span {
+
+  font-family: ${props =>
+    props.theme.fontFamily ||
+    '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif'};
+  }
 }
 `
 
