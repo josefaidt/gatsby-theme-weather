@@ -14,6 +14,7 @@ const NotificationReducer = (state, action) => {
       const newNotification = {
         ...internalData,
         id: state.length ? state[state.length - 1].id + 1 : 0,
+        creation: Date.now(),
         ...action.payload,
       }
       console.log(newNotification)
