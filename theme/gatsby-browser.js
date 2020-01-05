@@ -1,16 +1,24 @@
 import React from 'react'
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider, useCurrentTheme } from './src/helpers/ThemeContext'
 import { GeoContextProvider } from './src/helpers/GeoContext'
 import { WeatherProvider } from './src/helpers/WeatherContext'
 import { NotificationProvider } from './src/helpers/NotificationContext'
-import GlobalStyle from './src/style.css'
-import theme from './src/theme'
+
+export const onServiceWorkerUpdateReady = () => {
+  // eslint-disable-next-line no-alert
+  const answer = window.confirm(
+    `This application has been updated. Reload to display the latest version?`
+  )
+
+  if (answer === true) {
+    window.location.reload()
+  }
+}
 
 // eslint-disable-next-line react/display-name
 export const wrapRootElement = ({ element }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle theme={theme} />
+    <ThemeProvider>
       <NotificationProvider>
         <GeoContextProvider>
           <WeatherProvider>{element}</WeatherProvider>
@@ -18,4 +26,8 @@ export const wrapRootElement = ({ element }) => {
       </NotificationProvider>
     </ThemeProvider>
   )
+}
+
+export const wrapPageElement = ({ element }) => {
+  return <>{element}</>
 }

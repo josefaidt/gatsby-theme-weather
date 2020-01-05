@@ -16,6 +16,7 @@ import {
   FaceDizzy32,
 } from '@carbon/icons-react'
 import styled from 'styled-components'
+import { useCurrentTheme } from '../../helpers/ThemeContext'
 
 const Loading = styled.div`
   display: flex;
@@ -31,9 +32,9 @@ const Loading = styled.div`
     height: 32px;
     margin: 1px;
     border-radius: 50%;
-    border: 5px solid ${({ theme }) => theme.accent || 'white'};
-    border-color: ${({ theme }) => theme.accent || 'white'} transparent
-      ${({ theme }) => theme.accent || 'white'} transparent;
+    border: 5px solid ${({ theme }) => theme.colors.text || 'black'};
+    border-color: ${({ theme }) => theme.colors.text || 'black'} transparent
+      ${({ theme }) => theme.colors.text || 'black'} transparent;
     animation: spin-two-ring 1.2s linear infinite;
   }
   @keyframes spin-two-ring {
@@ -47,10 +48,12 @@ const Loading = styled.div`
 `
 
 const WIcon = ({ icon }) => {
+  const theme = useCurrentTheme()
   switch (icon) {
     case 'rain':
       return <CloudRain32 />
     case 'clear-day':
+    case 'sunny':
       return <Sunny32 />
     case 'clear-night':
       return <LightFilled32 />
@@ -73,7 +76,7 @@ const WIcon = ({ icon }) => {
     case 'error':
       return <FaceDizzy32 />
     case 'loading':
-      return <Loading />
+      return <Loading theme={theme} />
     default:
       return <span>...</span>
   }

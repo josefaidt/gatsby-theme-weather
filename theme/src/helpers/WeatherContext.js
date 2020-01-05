@@ -15,9 +15,17 @@ const WeatherReducer = (state, action) => {
 }
 
 const WeatherProvider = ({ children }) => {
-  // TODO: useEffect to update context when localStorage is available
-  // const cachedData = localStorage && JSON.parse(localStorage.getItem('weather'))
   const [state, dispatch] = React.useReducer(WeatherReducer, null)
+  React.useEffect(() => {
+    const getCountyInformation = async countyUrl => {
+      const res = await fetch(countyUrl)
+      const data = await res.json()
+      return dispatch({ type: 'update', payload: { county: data } })
+    }
+    if (state && state.properties && state.properties.county && !state.county) {
+      getCountyInformation(state.properties.county)
+    }
+  }, [state])
   return (
     <WeatherStateContext.Provider value={state}>
       <WeatherDispatchContext.Provider value={dispatch}>{children}</WeatherDispatchContext.Provider>

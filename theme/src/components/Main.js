@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
+import { useCurrentTheme } from '../helpers/ThemeContext'
 
 const StyledMainContainer = styled.div`
   display: flex;
@@ -7,17 +8,20 @@ const StyledMainContainer = styled.div`
   justify-content: center;
   align-items: center;
   main {
+    display: grid;
+    grid-gap: 1.5rem;
+
     margin: 3rem 0;
-    max-width: 90vw;
+    width: 90vw;
     color: ${({ theme }) => theme.colors.text || 'black'};
     @media screen and (min-width: 959px) {
-      max-width: 50vw;
+      width: 50vw;
     }
   }
 `
 
 const Main = props => {
-  const theme = React.useContext(ThemeContext)
+  const theme = useCurrentTheme()
   return (
     <StyledMainContainer theme={theme}>
       <main>{props.children}</main>
