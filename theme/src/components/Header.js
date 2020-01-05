@@ -12,7 +12,14 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  margin-top: 1rem;
   padding: 1.2rem 1rem;
+  border-radius: 0.75rem;
+  width: 95vw;
+  @media screen and (min-width: 959px) {
+    width: 70vw;
+  }
 
   h1,
   h2,
