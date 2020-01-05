@@ -13,11 +13,26 @@ const StyledCard = styled.article`
   border-radius: 5px;
   padding: 0.5rem 1rem;
   max-height: 50vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   .gtw--card--header-title__container {
     margin-top: 0.5rem;
     margin-bottom: 0.4rem;
+
+    h1,h2,h3,h4,h5 {
+      margin: 0;
+    }
+    padding-bottom: 1.2rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .gtw--card--header-icon__container {
+    svg {
+      fill: ${({ theme }) => theme.colors.text || 'black'};
+    }
   }
   .gtw--card--description {
     margin-bottom: 0.2rem;
