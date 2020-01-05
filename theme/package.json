@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-weather",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "repository": "https://github.com/josefaidt/gatsby-theme-weather.git",
   "author": "josef <josef.aidt@gmail.com>",
@@ -18,11 +18,11 @@
   "dependencies": {
     "@carbon/icons-react": "^10.8.0",
     "framer-motion": "^1.7.0",
-    "gatsby-source-filesystem": "^2.1.43",
-    "gatsby-plugin-styled-components": "^3.1.16",
     "gatsby-plugin-manifest": "^2.2.34",
     "gatsby-plugin-offline": "^3.0.30",
     "gatsby-plugin-react-helmet": "^3.1.18",
+    "gatsby-plugin-styled-components": "^3.1.16",
+    "gatsby-source-filesystem": "^2.1.43",
     "react-geocode": "^0.2.1",
     "react-helmet": "^5.2.1",
     "styled-components": "^4.4.1"
