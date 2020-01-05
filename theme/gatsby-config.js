@@ -1,13 +1,7 @@
 module.exports = options => ({
   siteMetadata: {
     title: 'gatsby-theme-weather',
+    refreshInterval: options.refreshInterval || 20,
   },
-  plugins: [
-    // {
-    //   resolve: 'gatsby-plugin-page-creator',
-    //   options: {
-    //     path: `src/pages`,
-    //   },
-    // },
-  ],
+  plugins: [],
 })

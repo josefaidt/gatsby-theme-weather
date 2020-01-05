@@ -48,7 +48,6 @@ const Header = ({ children, title }) => {
   `)
   React.useEffect(() => {
     if (!geoState.pending && weatherState) {
-      console.log('MADE IT HERE')
       return setIsRefreshing(false)
     }
   }, [geoState.pending, weatherState])

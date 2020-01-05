@@ -3,6 +3,7 @@ import styled, { ThemeContext } from 'styled-components'
 import { useStaticQuery, graphql } from 'gatsby'
 import { useGeoState } from '../helpers/GeoContext'
 import { useWeather } from '../helpers/WeatherContext'
+import useInterval from '../hooks/useInterval'
 import NotificationContainer from './Notification'
 
 const StyledLayout = styled.div`
@@ -24,6 +25,16 @@ const StyledLayout = styled.div`
 const Skeleton = ({ children, title }) => {
   const geoState = useGeoState()
   const [weatherState, weatherDispatch] = useWeather()
+  const query = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          refreshInterval
+        }
+      }
+    }
+  `)
+
   React.useEffect(() => {
     const getWeather = async () => {
       const res = await fetch(
@@ -37,6 +48,16 @@ const Skeleton = ({ children, title }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geoState, weatherState])
+
+  const refreshData = () => {
+    return weatherDispatch({ type: 'clear' })
+  }
+
+  const interval = query.site.siteMetadata.refreshInterval
+  useInterval(() => {
+    refreshData()
+  }, interval * 60 * 1000)
+
   return (
     <StyledLayout>
       <NotificationContainer />
