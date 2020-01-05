@@ -20,6 +20,8 @@
     "framer-motion": "^1.7.0",
     "gatsby-source-filesystem": "^2.1.43",
     "gatsby-plugin-styled-components": "^3.1.16",
+    "gatsby-plugin-manifest": "^2.2.34",
+    "gatsby-plugin-offline": "^3.0.30",
     "react-geocode": "^0.2.1",
     "styled-components": "^4.4.1"
   },

@@ -11,7 +11,6 @@ const ThemeReducer = (state, action) => {
       const newMode = Object.keys(state.modes)
         .filter(m => m !== current)
         .toString()
-      console.log(newMode)
       return { ...state, colors: { _current: newMode, ...state.modes[newMode] } }
     }
     default:

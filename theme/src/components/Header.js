@@ -16,7 +16,7 @@ const StyledHeader = styled.header`
 
   margin-top: 1rem;
   padding: 1.2rem 1rem;
-  border-radius: 0.75rem;
+  border-radius: 0.65rem;
   width: 95vw;
   @media screen and (min-width: 959px) {
     width: 70vw;

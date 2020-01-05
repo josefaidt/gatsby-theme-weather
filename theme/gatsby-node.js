@@ -8,7 +8,7 @@ exports.onCreateNode = ({ node, actions }) => {
   // Transform the new node here and create a new node or
   // create a new node field.
   if (node.internal.type === 'SitePage') {
-    console.log(node)
+    // console.log(node)
   }
 }
 
