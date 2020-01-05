@@ -24,10 +24,11 @@ const StyledNotificationContainer = styled.div`
     border-radius: 5px;
     padding: 0.5rem 1rem;
     padding-left: 1.3rem;
+    padding-bottom: 0.7rem;
 
     .gtw--notification-toast--title {
-      margin-top: 0.2rem
-      margin-bottom: 0.8rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.4rem;
     }
     .gtw--notification-toast--description {
       margin-bottom: 0.2rem;
@@ -37,6 +38,8 @@ const StyledNotificationContainer = styled.div`
       position: absolute;
       left: 0.1rem;
       top: 0.1rem;
+      width: 1rem;
+      height: 1rem;
     }
 
     button#gtw--notification-toast--button__close {
@@ -44,7 +47,7 @@ const StyledNotificationContainer = styled.div`
       top: 0;
       right: 0;
       cursor: pointer;
-      
+
       display: flex;
       justify-content: center;
       align-items: center;
@@ -53,7 +56,7 @@ const StyledNotificationContainer = styled.div`
       height: 1.3rem;
       border: none;
       border-radius: 0.125rem;
-      
+
       svg {
         height: 0.5rem;
         width: 0.5rem;
@@ -70,7 +73,6 @@ const StyledNotificationContainer = styled.div`
           stroke: ${({ theme }) => theme.colors.background || 'white'};
         }
       }
-
     }
   }
 `
