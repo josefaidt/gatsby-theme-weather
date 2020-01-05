@@ -9,10 +9,10 @@ const StyledMainContainer = styled.div`
   align-items: center;
   main {
     margin: 3rem 0;
-    max-width: 90vw;
+    width: 90vw;
     color: ${({ theme }) => theme.colors.text || 'black'};
     @media screen and (min-width: 959px) {
-      max-width: 50vw;
+      width: 50vw;
     }
   }
 `
