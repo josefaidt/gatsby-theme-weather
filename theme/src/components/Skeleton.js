@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
 import { useStaticQuery, graphql } from 'gatsby'
 import { useGeoState } from '../helpers/GeoContext'
 import { useWeather } from '../helpers/WeatherContext'
@@ -18,10 +18,6 @@ const StyledLayout = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-end;
-  }
-
-  pre {
-    color: ${({ theme }) => theme.colors.text || 'black'};
   }
 `
 

@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
+import { useCurrentTheme } from '../../helpers/ThemeContext'
 
 const StyledNotificationToast = styled.div`
   .gtw--notification-toast {
@@ -69,7 +70,7 @@ const StyledNotificationToast = styled.div`
 `
 
 const NotificationToast = ({ data: n, onClose }) => {
-  const theme = React.useContext(ThemeContext)
+  const theme = useCurrentTheme()
   const getTypeColor = type => {
     switch (type) {
       case 'error':

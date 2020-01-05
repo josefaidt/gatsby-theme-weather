@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
+import { useCurrentTheme } from '../helpers/ThemeContext'
 
 const StyledMainContainer = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const StyledMainContainer = styled.div`
 `
 
 const Main = props => {
-  const theme = React.useContext(ThemeContext)
+  const theme = useCurrentTheme()
   return (
     <StyledMainContainer theme={theme}>
       <main>{props.children}</main>

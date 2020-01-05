@@ -1,9 +1,10 @@
 import React from 'react'
 import { Renew32 } from '@carbon/icons-react'
 import { useStaticQuery, graphql } from 'gatsby'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
 import { useGeoState } from '../helpers/GeoContext'
 import { useWeather } from '../helpers/WeatherContext'
+import { useTheme } from '../helpers/ThemeContext'
 import RefreshButton from './RefreshButton.css'
 
 const StyledHeader = styled.header`
@@ -40,7 +41,7 @@ const StyledHeader = styled.header`
 `
 
 const Header = ({ children, title }) => {
-  const theme = React.useContext(ThemeContext)
+  const [theme, themeDispatch] = useTheme()
   const [isRefreshing, setIsRefreshing] = React.useState(true)
   const geoState = useGeoState()
   const [weatherState, weatherDispatch] = useWeather()

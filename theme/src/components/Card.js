@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
+import { useCurrentTheme } from '../helpers/ThemeContext'
 
 const StyledCard = styled.article`
   background-color: ${({ theme }) => `${theme.colors.primary}d9` || 'whitesmoke'};
@@ -46,7 +47,7 @@ const StyledCard = styled.article`
 `
 
 const Card = props => {
-  const theme = React.useContext(ThemeContext)
+  const theme = useCurrentTheme()
   return <StyledCard theme={theme} {...props} />
 }
 

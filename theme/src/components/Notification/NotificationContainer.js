@@ -1,6 +1,7 @@
 import React from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import { useCurrentTheme } from '../../helpers/ThemeContext'
 import { useNotifications } from '../../helpers/NotificationContext'
 import NotificationToast from './NotificationToast'
 
@@ -18,7 +19,7 @@ const StyledNotificationContainer = styled.div`
 
 const NotificationContainer = ({ children, notifications }) => {
   const [notificationState, notificationDispatch] = useNotifications()
-  const theme = React.useContext(ThemeContext)
+  const theme = useCurrentTheme()
   const onClose = notificationId => {
     return notificationDispatch({ type: 'toast_shown', payload: { id: notificationId } })
   }
