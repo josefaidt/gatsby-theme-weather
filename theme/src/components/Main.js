@@ -8,6 +8,9 @@ const StyledMainContainer = styled.div`
   justify-content: center;
   align-items: center;
   main {
+    display: grid;
+    grid-gap: 1.5rem;
+
     margin: 3rem 0;
     width: 90vw;
     color: ${({ theme }) => theme.colors.text || 'black'};
