@@ -24,9 +24,7 @@ const StyledLayout = styled.div`
 const Skeleton = ({ children, title }) => {
   const geoState = useGeoState()
   const [weatherState, weatherDispatch] = useWeather()
-  console.log('SKELETON RERENDERING')
   React.useEffect(() => {
-    console.log('RUNNING EFFECT')
     const getWeather = async () => {
       const res = await fetch(
         `https://api.weather.gov/points/${geoState.data.latitude},${geoState.data.longitude}`
@@ -34,10 +32,7 @@ const Skeleton = ({ children, title }) => {
       const data = await res.json()
       return weatherDispatch({ type: 'update', payload: data })
     }
-    console.log('WEATHER STATE IS', weatherState)
-    console.log('GEO STATE IS', geoState)
     if (!weatherState && geoState.data.latitude) {
-      console.log('MADE IT HERE')
       getWeather()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

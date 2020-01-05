@@ -10,8 +10,15 @@ const NotificationReducer = (state, action) => {
     },
   }
   switch (action.type) {
-    case 'create':
-      return [...state].push({ ...internalData, id: state[state.length - 1], ...action.payload })
+    case 'create': {
+      const newNotification = {
+        ...internalData,
+        id: state.length ? state[state.length - 1].id + 1 : 0,
+        ...action.payload,
+      }
+      console.log(newNotification)
+      return [...state, newNotification]
+    }
     case 'toast_shown': {
       return [...state].map(n => {
         if (n.id === action.payload.id) {
@@ -58,7 +65,8 @@ const initialState = [
 const NotificationProvider = ({ children }) => {
   // TODO: useEffect to update context when localStorage is available
   // const cachedData = localStorage && JSON.parse(localStorage.getItem('Notification'))
-  const [state, dispatch] = React.useReducer(NotificationReducer, initialState)
+  // const [state, dispatch] = React.useReducer(NotificationReducer, initialState)
+  const [state, dispatch] = React.useReducer(NotificationReducer, [])
   return (
     <NotificationStateContext.Provider value={state}>
       <NotificationDispatchContext.Provider value={dispatch}>

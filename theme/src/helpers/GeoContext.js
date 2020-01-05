@@ -1,5 +1,6 @@
 import React from 'react'
 import useGeoLocation from '../hooks/useGeoLocation'
+import { useNotificationDispatch } from './NotificationContext'
 
 const GeoStateContext = React.createContext()
 const GeoDispatchContext = React.createContext()
@@ -17,15 +18,40 @@ const GeoReducer = (state, action) => {
 const GeoContextProvider = ({ children }) => {
   const { data, error } = useGeoLocation()
   const [state, dispatch] = React.useReducer(GeoReducer, { data, error, pending: true })
+  const notificationDispatch = useNotificationDispatch()
   React.useEffect(() => {
     if (
       data.latitude !== state.data.latitude ||
       data.longitude !== state.data.longitude ||
       error !== state.error
     ) {
+      if (error) {
+        notificationDispatch({
+          type: 'create',
+          payload: {
+            type: 'error',
+            content: {
+              title: 'Issue with GeoLocation',
+              description:
+                'There is an issue with retrieving the GeoLocation from your browser. Are you in incognito mode?',
+            },
+          },
+        })
+      } else {
+        notificationDispatch({
+          type: 'create',
+          payload: {
+            type: 'info',
+            content: {
+              title: 'GeoLocation Loaded',
+              description: 'GeoLocation loaded successfully',
+            },
+          },
+        })
+      }
       return dispatch({ type: 'update', payload: { data, error, pending: false } })
     }
-  }, [data, error, state])
+  }, [data, error, notificationDispatch, state])
   return (
     <GeoStateContext.Provider value={state}>
       <GeoDispatchContext.Provider value={dispatch}>{children}</GeoDispatchContext.Provider>

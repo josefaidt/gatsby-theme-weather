@@ -99,12 +99,12 @@ const NotificationContainer = ({ children, notifications }) => {
     <StyledNotificationContainer>
       {children}
       {notificationState.length &&
-        notificationState.map(n => {
+        notificationState.map((n, i) => {
           const typeColor = getTypeColor(n.type)
           return (
-            <>
+            <React.Fragment key={n.id}>
               {!n.__internal.toast_shown ? (
-                <div className="gtw--notification-toast" key={n.id}>
+                <div className="gtw--notification-toast">
                   <svg className="gtw--notification-toast--type" fill={typeColor}>
                     <circle cx="0.45rem" cy="0.55rem" r="0.22rem"></circle>
                   </svg>
@@ -118,7 +118,7 @@ const NotificationContainer = ({ children, notifications }) => {
                   </button>
                 </div>
               ) : null}
-            </>
+            </React.Fragment>
           )
         })}
     </StyledNotificationContainer>
