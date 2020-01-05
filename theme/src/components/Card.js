@@ -30,13 +30,16 @@ const StyledCard = styled.article`
   }
 
   .gtw--card--header-icon__container {
+    width: 2.2rem;
     svg {
+      display: flex;
       fill: ${({ theme }) => theme.colors.text || 'black'};
     }
   }
-  .gtw--card--description {
-    margin-bottom: 0.2rem;
-    font-size: 90%;
+  .gtw--card--body__container {
+    p {
+      padding: 0 1rem;
+    }
   }
 
   button#gtw--card--button__close {

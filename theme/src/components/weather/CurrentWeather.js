@@ -19,7 +19,7 @@ const CurrentWeather = props => {
     }
   }, [data, dispatch])
   data && data.forecast && console.log('CURRENTWEATHER DATA', data.forecast)
-  // const currentTime = data.pending || data.error ? null : toLocalTime(data.currently.time)
+  console.log('WEAHTER DATA', data)
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const currentDay = days[new Date().getDay()]
   return (
@@ -33,18 +33,16 @@ const CurrentWeather = props => {
         </div>
       </div>
       <div className="gtw--card--body__container">
-        {data && data.forecast ? <pre>{JSON.stringify(data.forecast, null, 2)}</pre> : null}
+        {data && data.county && current ? (
+          <>
+            <p>
+              Currently in {data.county.properties.name} it is {Math.round(current.temperature)}
+              &deg;{current.temperatureUnit}
+            </p>
+          </>
+        ) : null}
+        {/* {data && data.forecast ? <pre>{JSON.stringify(data.forecast, null, 2)}</pre> : null} */}
       </div>
-      {/* <span className="datetime">{data.pending || data.error ? '--' : `${currentTime}`}</span> */}
-      {/* <p>
-        Currently it is {data.pending || data.error ? '--' : Math.round(data.currently.temperature)}
-        &deg;F
-      </p>
-      <p>
-        Feels like{' '}
-        {data.pending || data.error ? '--' : Math.round(data.currently.apparentTemperature)}
-        &deg;F
-      </p> */}
     </Card>
   )
 }
