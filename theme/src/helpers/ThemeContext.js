@@ -7,7 +7,12 @@ const ThemeDispatchContext = React.createContext()
 const ThemeReducer = (state, action) => {
   switch (action.type) {
     case 'toggle': {
-      break
+      const current = state.colors._current
+      const newMode = Object.keys(state.modes)
+        .filter(m => m !== current)
+        .toString()
+      console.log(newMode)
+      return { ...state, colors: { _current: newMode, ...state.modes[newMode] } }
     }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)

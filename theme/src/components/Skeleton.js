@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import { useStaticQuery, graphql } from 'gatsby'
 import { useGeoState } from '../helpers/GeoContext'
 import { useWeather } from '../helpers/WeatherContext'
+import { useCurrentTheme } from '../helpers/ThemeContext'
 import useInterval from '../hooks/useInterval'
+import GlobalStyle from '../style.css'
 import NotificationContainer from './Notification'
 
 const StyledLayout = styled.div`
@@ -24,6 +26,7 @@ const StyledLayout = styled.div`
 const Skeleton = ({ children, title }) => {
   const geoState = useGeoState()
   const [weatherState, weatherDispatch] = useWeather()
+  const theme = useCurrentTheme()
   const query = useStaticQuery(graphql`
     query {
       site {
@@ -58,15 +61,18 @@ const Skeleton = ({ children, title }) => {
   }, interval * 60 * 1000)
 
   return (
-    <StyledLayout>
-      {children}
-      <div className="powered-by">
-        <a href="https://weather.gov" rel="noreferrer noopener" target="_blank">
-          Powered by weather.gov
-        </a>
-      </div>
-      <NotificationContainer />
-    </StyledLayout>
+    <>
+      <GlobalStyle theme={theme} />
+      <StyledLayout>
+        {children}
+        <div className="powered-by">
+          <a href="https://weather.gov" rel="noreferrer noopener" target="_blank">
+            Powered by weather.gov
+          </a>
+        </div>
+        <NotificationContainer />
+      </StyledLayout>
+    </>
   )
 }
 

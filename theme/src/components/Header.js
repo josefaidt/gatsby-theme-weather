@@ -1,11 +1,11 @@
 import React from 'react'
-import { Renew32 } from '@carbon/icons-react'
+import { Renew32, Light32, Asleep32 } from '@carbon/icons-react'
 import { useStaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import { useGeoState } from '../helpers/GeoContext'
 import { useWeather } from '../helpers/WeatherContext'
 import { useTheme } from '../helpers/ThemeContext'
-import RefreshButton from './RefreshButton.css'
+import NavButton from './NavButton.css'
 
 const StyledHeader = styled.header`
   background-color: ${({ theme }) => theme.colors.primary || 'white'};
@@ -34,7 +34,7 @@ const StyledHeader = styled.header`
 
   .gtw--header-button__toggle {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-gap: 0.5rem;
   }
@@ -70,9 +70,13 @@ const Header = ({ children, title }) => {
       <h1>{title || queryData.site.siteMetadata.title}</h1>
       {children}
       <div className="gtw--header-button__toggle">
-        <RefreshButton className={isRefreshing ? 'animate' : ''} onClick={refreshData}>
+        <NavButton onClick={() => themeDispatch({ type: 'toggle' })}>
+          {/* {theme.colors._current} */}
+          {theme.colors._current === 'light' ? <Light32 /> : <Asleep32 />}
+        </NavButton>
+        <NavButton className={isRefreshing ? 'animate--spin' : ''} onClick={refreshData}>
           <Renew32 />
-        </RefreshButton>
+        </NavButton>
       </div>
     </StyledHeader>
   )

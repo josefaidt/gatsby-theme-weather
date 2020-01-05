@@ -25,5 +25,8 @@ const themes = {
 
 export default {
   ...themes,
-  colors: themes.modes.light,
+  colors: {
+    _current: 'light',
+    ...themes.modes.light,
+  },
 }

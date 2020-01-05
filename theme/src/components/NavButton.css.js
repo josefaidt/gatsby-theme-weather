@@ -9,7 +9,7 @@ const RefreshButton = styled.button`
   fill: ${({ theme }) => theme.accent || 'white'};
   outline: ${({ theme }) => theme.accent || 'white'};
 
-  &.animate {
+  &.animate--spin {
     animation-name: spin;
     animation-duration: 2000ms;
     animation-iteration-count: infinite;
