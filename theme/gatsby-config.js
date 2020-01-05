@@ -3,5 +3,5 @@ module.exports = options => ({
     title: 'gatsby-theme-weather',
     refreshInterval: options.refreshInterval || 20,
   },
-  plugins: [],
+  plugins: ['gatsby-plugin-styled-components'],
 })
