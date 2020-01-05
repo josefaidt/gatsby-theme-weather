@@ -41,7 +41,6 @@ const Skeleton = ({ children, title }) => {
     <StyledLayout>
       <NotificationContainer />
       {children}
-      <pre>{JSON.stringify(weatherState, null, 2)}</pre>
       <div className="powered-by">
         <a href="https://weather.gov" rel="noreferrer noopener" target="_blank">
           Powered by weather.gov

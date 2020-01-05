@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme-weather",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "main": "index.js",
   "repository": "https://github.com/josefaidt/gatsby-theme-weather.git",
   "author": "josef <josef.aidt@gmail.com>",

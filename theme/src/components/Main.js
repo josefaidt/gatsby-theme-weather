@@ -10,7 +10,7 @@ const StyledMainContainer = styled.div`
     margin: 3rem 0;
     max-width: 90vw;
     color: ${({ theme }) => theme.colors.text || 'black'};
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 959px) {
       max-width: 50vw;
     }
   }
