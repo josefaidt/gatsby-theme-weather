@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useCurrentTheme } from '../../helpers/ThemeContext'
+import useInterval from '../../hooks/useInterval'
 
 const StyledNotificationToast = styled.div`
   .gtw--notification-toast {
@@ -85,6 +86,9 @@ const NotificationToast = ({ data: n, onClose }) => {
         return theme.colors.text
     }
   }
+  useInterval(() => {
+    onClose(n.id)
+  }, 7 * 1000)
   const typeColor = getTypeColor(n.type)
   return (
     <StyledNotificationToast theme={theme}>
