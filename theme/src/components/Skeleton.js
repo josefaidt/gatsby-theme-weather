@@ -6,6 +6,7 @@ import { useWeather } from '../helpers/WeatherContext'
 import { useCurrentTheme } from '../helpers/ThemeContext'
 import useInterval from '../hooks/useInterval'
 import GlobalStyle from '../style.css'
+import SEO from './seo'
 import NotificationContainer from './Notification'
 
 const StyledLayout = styled.div`
@@ -23,7 +24,7 @@ const StyledLayout = styled.div`
   }
 `
 
-const Skeleton = ({ children, title }) => {
+const Skeleton = ({ children, title, ...props }) => {
   const geoState = useGeoState()
   const [weatherState, weatherDispatch] = useWeather()
   const theme = useCurrentTheme()
@@ -63,6 +64,7 @@ const Skeleton = ({ children, title }) => {
   return (
     <>
       <GlobalStyle theme={theme} />
+      <SEO {...props.seo} />
       <StyledLayout>
         {children}
         <div className="powered-by">
