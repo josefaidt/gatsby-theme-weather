@@ -1,5 +1,6 @@
 import React from 'react'
 import theme from '../theme'
+import useLocalStorage from '../hooks/useLocalStorage'
 
 const ThemeStateContext = React.createContext()
 const ThemeDispatchContext = React.createContext()
@@ -20,6 +21,20 @@ const ThemeReducer = (state, action) => {
 
 const ThemeProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(ThemeReducer, theme)
+  const [currentTheme, setCurrentTheme] = React.useState(theme.colors._current)
+  const [cachedTheme, setCachedTheme] = useLocalStorage('gtw--theme-choice', theme.colors._current)
+  React.useEffect(() => {
+    if (cachedTheme !== state.colors._current) {
+      dispatch({ type: 'toggle' })
+    }
+    if (state.colors._current !== currentTheme) {
+      setCurrentTheme(state.colors._current)
+      if (cachedTheme !== state.colors._current) {
+        setCachedTheme(state.colors._current)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.colors._current])
   return (
     <ThemeStateContext.Provider value={state}>
       <ThemeDispatchContext.Provider value={dispatch}>{children}</ThemeDispatchContext.Provider>
