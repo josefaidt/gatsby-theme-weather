@@ -8,7 +8,7 @@ const HomePage = props => {
   return (
     <Layout>
       <CurrentWeather />
-      <pre>{JSON.stringify(weatherState, null, 2)}</pre>
+      <pre style={{ maxHeight: '50rem' }}>{JSON.stringify(weatherState, null, 2)}</pre>
     </Layout>
   )
 }
