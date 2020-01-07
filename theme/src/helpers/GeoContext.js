@@ -17,6 +17,7 @@ const GeoReducer = (state, action) => {
 
 const GeoContextProvider = ({ children }) => {
   const [hasError, setHasError] = React.useState(false)
+  const [hasSuccessNotification, setHasSuccessNotification] = React.useState(false)
   const { data, error } = useGeoLocation()
   const [state, dispatch] = React.useReducer(GeoReducer, { data, error, pending: true })
   const notificationDispatch = useNotificationDispatch()
@@ -27,6 +28,9 @@ const GeoContextProvider = ({ children }) => {
       error !== state.error
     ) {
       if (error && !hasError) {
+        if (hasSuccessNotification) {
+          setHasSuccessNotification(false)
+        }
         notificationDispatch({
           type: 'create',
           payload: {
@@ -47,23 +51,26 @@ const GeoContextProvider = ({ children }) => {
         if (hasError) {
           setHasError(false)
         }
-        notificationDispatch({
-          type: 'create',
-          payload: {
-            type: 'info',
-            content: {
-              title: 'GeoLocation Loaded',
-              description: 'GeoLocation loaded successfully',
+        if (!hasSuccessNotification) {
+          setHasSuccessNotification(true)
+          notificationDispatch({
+            type: 'create',
+            payload: {
+              type: 'info',
+              content: {
+                title: 'GeoLocation Loaded',
+                description: 'GeoLocation loaded successfully',
+              },
             },
-          },
-        })
+          })
+        }
         return dispatch({
           type: 'update',
           payload: { data, error: null, pending: false },
         })
       }
     }
-  }, [data, error, hasError, notificationDispatch, state])
+  }, [data, error, hasError, hasSuccessNotification, notificationDispatch, state])
   return (
     <GeoStateContext.Provider value={state}>
       <GeoDispatchContext.Provider value={dispatch}>{children}</GeoDispatchContext.Provider>
