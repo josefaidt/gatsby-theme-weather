@@ -7,6 +7,9 @@ const StyledNotificationToast = styled.div`
   .gtw--notification-toast {
     background-color: ${({ theme }) => theme.colors.background || 'white'};
     width: 24rem;
+    @media screen and (max-width: 768px) {
+      max-width: 100%;
+    }
     position: relative;
     overflow: hidden;
     /* border: 1px solid red; */
