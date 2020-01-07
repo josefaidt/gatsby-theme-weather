@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 import { useCurrentTheme } from '../../helpers/ThemeContext'
 import useInterval from '../../hooks/useInterval'
 
@@ -95,7 +96,16 @@ const NotificationToast = ({ data: n, onClose }) => {
   const typeColor = getTypeColor(n.type)
   return (
     <StyledNotificationToast theme={theme}>
-      <div className="gtw--notification-toast">
+      <motion.div
+        drag="x"
+        dragConstraints={{ left: 0, right: 300 }}
+        onDrag={(event, info) => {
+          if (info.point.x > 240) {
+            onClose(n.id)
+          }
+        }}
+        className="gtw--notification-toast"
+      >
         <svg className="gtw--notification-toast--type" fill={typeColor}>
           <circle cx="0.45rem" cy="0.55rem" r="0.22rem"></circle>
         </svg>
@@ -107,7 +117,7 @@ const NotificationToast = ({ data: n, onClose }) => {
             <line x1="100%" x2="0" y1="0" y2="100%" stroke="black"></line>
           </svg>
         </button>
-      </div>
+      </motion.div>
     </StyledNotificationToast>
   )
 }
