@@ -16,7 +16,7 @@ const StyledNotificationToast = styled.div`
     /* border: 1px solid red; */
 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid ${({ theme }) => `${theme.colors.text}33` || 'rgba(0,0,0,0.2)'};
     border-radius: 5px;
     padding: 0.5rem 1rem;
     padding-left: 1.3rem;
