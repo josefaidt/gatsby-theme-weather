@@ -68,8 +68,8 @@ const WIcon = ({ icon }) => {
     case 'cloudy':
       return <Cloud32 />
     case 'partly-cloudy-day':
-      return <PartlyCloudy32 />
     case 'partly-cloudy-night':
+    case 'partly-cloudy':
       return <PartlyCloudy32 />
     case 'thunderstorm':
       return <CloudLightning32 />
