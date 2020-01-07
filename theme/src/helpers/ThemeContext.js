@@ -21,10 +21,12 @@ const ThemeReducer = (state, action) => {
 
 const ThemeProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(ThemeReducer, theme)
+  const [mounted, setMounted] = React.useState(false)
   const [currentTheme, setCurrentTheme] = React.useState(theme.colors._current)
   const [cachedTheme, setCachedTheme] = useLocalStorage('gtw--theme-choice', theme.colors._current)
   React.useEffect(() => {
-    if (cachedTheme !== state.colors._current) {
+    setMounted(true)
+    if (cachedTheme !== currentTheme && !mounted) {
       dispatch({ type: 'toggle' })
     }
     if (state.colors._current !== currentTheme) {
