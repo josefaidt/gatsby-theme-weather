@@ -1,6 +1,8 @@
+import React from 'react'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
-const RefreshButton = styled.button`
+const StyledNavButton = styled(motion.button)`
   margin: 0;
   display: flex;
   align-items: center;
@@ -18,6 +20,7 @@ const RefreshButton = styled.button`
 
   &:hover {
     cursor: pointer;
+    z-index: 5;
   }
 
   @keyframes spin {
@@ -30,4 +33,10 @@ const RefreshButton = styled.button`
   }
 `
 
-export default RefreshButton
+const NavButton = props => (
+  <StyledNavButton whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} {...props}>
+    {props.children}
+  </StyledNavButton>
+)
+
+export default NavButton

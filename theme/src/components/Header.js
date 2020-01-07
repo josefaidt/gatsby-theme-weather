@@ -5,11 +5,11 @@ import styled from 'styled-components'
 import { useGeoState } from '../helpers/GeoContext'
 import { useWeather } from '../helpers/WeatherContext'
 import { useTheme } from '../helpers/ThemeContext'
-import NavButton from './NavButton.css'
+import NavButton from './NavButton'
 
 const StyledHeader = styled.header`
   background-color: ${({ theme }) => theme.colors.primary || 'white'};
-  color: ${({ theme }) => theme.colors.background || 'black'};
+  color: ${({ theme }) => theme.modes.light.background || 'black'};
   display: flex;
   justify-content: space-between;
   align-items: center;

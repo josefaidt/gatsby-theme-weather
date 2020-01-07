@@ -11,6 +11,9 @@ const StyledNotificationContainer = styled.div`
   bottom: 0;
   z-index: 9999;
   padding-right: 0.8rem;
+  @media screen and (max-width: 768px) {
+    margin-left: 0.8rem;
+  }
   padding-bottom: 1rem;
   display: grid;
   grid-template-columns: 1fr;

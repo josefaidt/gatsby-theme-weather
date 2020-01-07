@@ -1,15 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 import { useCurrentTheme } from '../helpers/ThemeContext'
 
-const StyledCard = styled.article`
+const StyledCard = styled(motion.article)`
   background-color: ${({ theme }) => theme.colors.background || 'white'};
   position: relative;
   overflow: hidden;
   /* border: 1px solid red; */
 
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px 0 'rgba(0,0,0,0.2)';
+  border: 1px solid ${({ theme }) => `${theme.colors.text}33` || 'rgba(0,0,0,0.2)'};
   border-radius: 5px;
   padding: 0.5rem 1rem;
   max-height: 50vh;
@@ -121,7 +122,15 @@ const StyledCard = styled.article`
 
 const Card = props => {
   const theme = useCurrentTheme()
-  return <StyledCard theme={theme} {...props} />
+  return (
+    <StyledCard
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      theme={theme}
+      className={theme.colors._current === 'dark' ? 'gtw--theme__dark' : 'gtw--theme__light'}
+      {...props}
+    />
+  )
 }
 
 export { StyledCard }
