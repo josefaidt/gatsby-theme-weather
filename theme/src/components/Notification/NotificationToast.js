@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion'
 import { useCurrentTheme } from '../../helpers/ThemeContext'
 import useInterval from '../../hooks/useInterval'
 
@@ -94,36 +94,33 @@ const NotificationToast = ({ data: n, onClose }) => {
     onClose(n.id)
   }, 7 * 1000)
   const typeColor = getTypeColor(n.type)
+  const x = useMotionValue(0)
+  const opacity = useTransform(x, [0, 180, 250], ['1', '0.7', '0'])
   return (
-    <StyledNotificationToast theme={theme}>
-      <motion.div
-        drag="x"
-        dragConstraints={{ left: 0, right: 300 }}
-        onDrag={(event, info) => {
-          if (info.point.x > 240) {
-            onClose(n.id)
-          }
-        }}
-        className="gtw--notification-toast"
-      >
-        <svg className="gtw--notification-toast--type" fill={typeColor}>
-          <circle cx="0.45rem" cy="0.55rem" r="0.22rem"></circle>
-        </svg>
-        <h4 className="gtw--notification-toast--title">{n.content.title}</h4>
-        <p className="gtw--notification-toast--description">{n.content.description}</p>
-        <button id="gtw--notification-toast--button__close" onClick={e => onClose(n.id)}>
-          <svg width="20" height="20">
-            <line x1="0" x2="100%" y1="0" y2="100%" stroke="black"></line>
-            <line x1="100%" x2="0" y1="0" y2="100%" stroke="black"></line>
+    <motion.div
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.7}
+      onDrag={(event, info) => info.point.x > 250 && onClose(n.id)}
+      style={{ x, opacity }}
+    >
+      <StyledNotificationToast theme={theme}>
+        <div className="gtw--notification-toast">
+          <svg className="gtw--notification-toast--type" fill={typeColor}>
+            <circle cx="0.45rem" cy="0.55rem" r="0.22rem"></circle>
           </svg>
-        </button>
-      </motion.div>
-    </StyledNotificationToast>
+          <h4 className="gtw--notification-toast--title">{n.content.title}</h4>
+          <p className="gtw--notification-toast--description">{n.content.description}</p>
+          <button id="gtw--notification-toast--button__close" onClick={e => onClose(n.id)}>
+            <svg width="20" height="20">
+              <line x1="0" x2="100%" y1="0" y2="100%" stroke="black"></line>
+              <line x1="100%" x2="0" y1="0" y2="100%" stroke="black"></line>
+            </svg>
+          </button>
+        </div>
+      </StyledNotificationToast>
+    </motion.div>
   )
-}
-
-NotificationToast.defaultProps = {
-  text: "I'm a toast",
 }
 
 export default NotificationToast
