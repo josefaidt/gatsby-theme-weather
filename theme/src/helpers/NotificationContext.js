@@ -9,12 +9,18 @@ const NotificationReducer = (state, action) => {
       toast_shown: false,
     },
   }
+  const sampleContent = {
+    title: "I'm a sample title",
+    description:
+      'The default values for notification content have been set. Dispatch using `content: { title: String!, description: String! }`',
+  }
   switch (action.type) {
     case 'create': {
       const newNotification = {
         ...internalData,
         id: state.length ? state[state.length - 1].id + 1 : 0,
         creation: Date.now(),
+        content: sampleContent,
         ...action.payload,
       }
       console.log(newNotification)
